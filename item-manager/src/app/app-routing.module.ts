@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegistrationComponent } from './modules/auth/components/registration/registration.component';
+import { FirstComponentComponent } from './first-component/first-component.component';
+import { AuthGuard } from './modules/shared/services/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules/auth/auth.module').
       then(m => m.AuthModule)
+  },
+  {
+    path: 'login',
+    redirectTo: ''
+  },
+  {
+    path: 'home',
+    component: FirstComponentComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

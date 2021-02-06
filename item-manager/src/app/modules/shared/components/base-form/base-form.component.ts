@@ -1,13 +1,42 @@
-import { FormGroup } from "@angular/forms";
+import { EmailValidator, FormControl, FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
+import { AngularFireService } from "../../services/auth.service";
 
 export abstract class BaseForm {
+
+    constructor (private angularFireService: AngularFireService) { }
+
     public theForm: FormGroup;
-    
-    abstract apiRequest(formData: any): Observable<any>;
+    protected abstract apiRequest(formData: any): Observable<any>;
+    protected abstract handleSuccess(response): void;
+    protected abstract handleError(response): void;
+
+    public isFieldInvalid(formControlName: string, formGroup?: FormGroup): boolean {
+        formGroup = formGroup || this.theForm;
+        return (
+            !formGroup.get(formControlName).disabled &&
+            !formGroup.get(formControlName).valid &&            
+            formGroup.get(formControlName).touched
+        );
+    }
+
+    public clearField(formControlName: string, formGroup?: FormGroup) {
+        formGroup = formGroup || this.theForm;
+        formGroup.get(formControlName).setValue(null);
+    }
 
     public isSubmitDisabled(): boolean {
         return this.theForm.invalid || this.theForm.disabled;
+    }
+
+    public onSignIn() {
+        const formData = this.theForm.value;
+        this.angularFireService.signIn(formData.email, formData.password);
+    }
+
+    public onSignUp() {
+        const formData = this.theForm.value;
+        this.angularFireService.signUp(formData.email, formData.password);
     }
 
     public onSubmit(): void {
@@ -17,7 +46,4 @@ export abstract class BaseForm {
             error: (error) => this.handleError(error)
         })
     }
-
-    public abstract handleSuccess(response): void;
-    public abstract handleError(response): void;
 }

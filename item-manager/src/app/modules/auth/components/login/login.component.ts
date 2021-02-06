@@ -1,25 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { LoginFormService } from '../../services/login-form.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { BaseForm } from 'src/app/modules/shared/components/base-form/base-form.component';
+import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
+export class LoginComponent extends BaseForm implements OnInit {
 
-  constructor(private loginFormService: LoginFormService) {
-    this.loginFormService.initializeLoginForm().subscribe(
-      (value: FormGroup) => {
-        this.loginForm = value;
-        console.log(this.loginForm);
-      }
-    )
+  constructor(private afService: AngularFireService,
+    private router: Router) {
+    super(afService);
   }
-
+  
   ngOnInit(): void {
+    this.initializeLoginForm();
   }
 
+  public initializeLoginForm(user?: UserModel): void {
+    this.theForm = new FormGroup({
+      email: new FormControl(
+        user ? user.email : 'admin@admin.test',
+        [Validators.required]
+      ),
+      password: new FormControl(
+        user ? user.password : 'abc123',
+        [Validators.required]
+      )
+    });
+  }
+
+  onSignIn() {
+    super.onSignIn();
+    return this.router.navigate(['/home']).then();
+  }
+
+  protected apiRequest(formData: any): Observable<any> {
+    console.log('Api request form data: ', formData);
+    throw new Error('Method not implemented.');
+  }
+  protected handleSuccess(response: any): void {
+    throw new Error('Method not implemented.');
+  }
+  protected handleError(response: any): void {
+    throw new Error('Method not implemented.');
+  }
+
+  public redirectToRegistration() {
+    this.router.navigate(['registration']);
+  }
 }
