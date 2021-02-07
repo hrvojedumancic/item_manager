@@ -35,6 +35,21 @@ export class RegistrationComponent extends BaseForm implements OnInit {
     });
   }
 
+  onSignUp(): Promise<boolean> {
+    super.onSignUp().then(
+      value => {
+        if (value) {
+          console.log('Registration success');
+          this.router.navigate(['home']);
+        } else {
+          console.log('Registration not a success');
+        }
+        return Promise.resolve(value);
+      }
+    )
+    return Promise.resolve(null);
+  }
+
   protected apiRequest(formData: any): Observable<any> {
     throw new Error('Method not implemented.');
   }

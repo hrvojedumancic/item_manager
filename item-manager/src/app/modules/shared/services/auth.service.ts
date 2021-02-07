@@ -6,27 +6,39 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AngularFireService {
-  private currectUser: Observable<any>;
+  private isLoggedIn: boolean = false;
 
   constructor(private fireAuth: AngularFireAuth) { }
 
-  public signUp(email: string, password: string) {
-    this.fireAuth.createUserWithEmailAndPassword(email, password).then(
+  public signUp(email: string, password: string): Promise<boolean> {
+    return this.fireAuth.createUserWithEmailAndPassword(email, password).then(
       value => {
+        this.isLoggedIn = true;
         console.log('Signed up to firebase. Response: ', value);
+        return Promise.resolve(true);
+      },
+      error => {
+        console.log('Sign up is not successful', error);
+        return Promise.resolve(false);
       }
     )
   }
 
-  public signIn(email: string, password: string) {
-    this.fireAuth.signInWithEmailAndPassword(email, password).then(
+  public signIn(email: string, password: string): Promise<boolean> {
+    return this.fireAuth.signInWithEmailAndPassword(email, password).then(
       value => {
+        this.isLoggedIn = true;
         console.log('Signed in to firebase. Response: ', value);
+        return Promise.resolve(true);
+      },
+      error => {
+        console.log(error);
+        return Promise.resolve(false);
       }
     )
   }
 
-  public getUser(): Observable<any> {
-    return this.fireAuth.user;
+  public getIsUserLoggedIn(): boolean {
+    return this.isLoggedIn;
   }
 }

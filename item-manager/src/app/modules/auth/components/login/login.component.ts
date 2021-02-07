@@ -35,9 +35,18 @@ export class LoginComponent extends BaseForm implements OnInit {
     });
   }
 
-  onSignIn() {
-    super.onSignIn();
-    return this.router.navigate(['/home']).then();
+  onSignIn(): Promise<boolean> {
+    super.onSignIn().then(
+      value => {
+        if (value) {
+          this.router.navigate(['home']).then();
+        } else {
+          console.log('Login is insucessful');
+        }
+        return Promise.resolve(value);
+      }
+    );
+    return Promise.resolve(null);
   }
 
   protected apiRequest(formData: any): Observable<any> {

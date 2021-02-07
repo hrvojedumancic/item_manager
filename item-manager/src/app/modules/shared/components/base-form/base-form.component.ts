@@ -29,14 +29,14 @@ export abstract class BaseForm {
         return this.theForm.invalid || this.theForm.disabled;
     }
 
-    public onSignIn() {
+    public onSignIn(): Promise<boolean> {
         const formData = this.theForm.value;
-        this.angularFireService.signIn(formData.email, formData.password);
+        return this.angularFireService.signIn(formData.email, formData.password);
     }
 
-    public onSignUp() {
+    public onSignUp(): Promise<boolean> {
         const formData = this.theForm.value;
-        this.angularFireService.signUp(formData.email, formData.password);
+        return this.angularFireService.signUp(formData.email, formData.password);
     }
 
     public onSubmit(): void {
