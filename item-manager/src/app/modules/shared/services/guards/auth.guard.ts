@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { AngularFireService } from '../auth.service';
 
 @Injectable({
@@ -8,9 +7,13 @@ import { AngularFireService } from '../auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private afService: AngularFireService) { }
+  constructor(private afService: AngularFireService, 
+    private router: Router) { }
 
   canActivate(): boolean {
+    if (!this.afService.getIsUserLoggedIn()) {
+      this.router.navigate(['login']);
+    }
     return this.afService.getIsUserLoggedIn();
   }
   

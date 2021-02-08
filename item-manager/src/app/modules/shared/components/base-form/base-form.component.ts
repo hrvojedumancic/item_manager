@@ -4,12 +4,15 @@ import { AngularFireService } from "../../services/auth.service";
 
 export abstract class BaseForm {
 
-    constructor (private angularFireService: AngularFireService) { }
-
     public theForm: FormGroup;
+    protected angularFireService: AngularFireService;
     protected abstract apiRequest(formData: any): Observable<any>;
     protected abstract handleSuccess(response): void;
     protected abstract handleError(response): void;
+
+    constructor (private aService: AngularFireService) {
+        this.angularFireService = aService;
+    }
 
     public isFieldInvalid(formControlName: string, formGroup?: FormGroup): boolean {
         formGroup = formGroup || this.theForm;
@@ -27,16 +30,6 @@ export abstract class BaseForm {
 
     public isSubmitDisabled(): boolean {
         return this.theForm.invalid || this.theForm.disabled;
-    }
-
-    public onSignIn(): Promise<boolean> {
-        const formData = this.theForm.value;
-        return this.angularFireService.signIn(formData.email, formData.password);
-    }
-
-    public onSignUp(): Promise<boolean> {
-        const formData = this.theForm.value;
-        return this.angularFireService.signUp(formData.email, formData.password);
     }
 
     public onSubmit(): void {

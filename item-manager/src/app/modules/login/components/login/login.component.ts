@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BaseForm } from 'src/app/modules/shared/components/base-form/base-form.component';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
-import { UserModel } from '../../models/user.model';
+import { LoginForm } from '../../services/login-form.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends BaseForm implements OnInit {
+export class LoginComponent extends LoginForm implements OnInit {
 
   constructor(private afService: AngularFireService,
     private router: Router) {
@@ -22,24 +21,28 @@ export class LoginComponent extends BaseForm implements OnInit {
     this.initializeLoginForm();
   }
 
-  public initializeLoginForm(user?: UserModel): void {
+  public initializeLoginForm(): void {
     this.theForm = new FormGroup({
       email: new FormControl(
-        user ? user.email : 'admin@admin.test',
+        'admin@admin.test',
         [Validators.required]
       ),
       password: new FormControl(
-        user ? user.password : 'abc123',
+        'abc123',
         [Validators.required]
       )
     });
   }
 
-  onSignIn(): Promise<boolean> {
-    super.onSignIn().then(
+  public onGoogleSignIn() {
+    
+  }
+
+  onSubmit(): Promise<boolean> {
+    super.onSubmit().then(
       value => {
         if (value) {
-          this.router.navigate(['home']).then();
+          this.router.navigate(['/']).then();
         } else {
           console.log('Login is unssucessful');
         }

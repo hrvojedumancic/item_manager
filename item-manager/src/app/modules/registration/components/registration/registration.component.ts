@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BaseForm } from 'src/app/modules/shared/components/base-form/base-form.component';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
-import { UserModel } from '../../models/user.model';
+import { RegistrationForm } from '../../services/registration-form.component';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent extends BaseForm implements OnInit {
+export class RegistrationComponent extends RegistrationForm implements OnInit {
 
   constructor(private afService: AngularFireService,
     private router: Router) {
@@ -22,25 +21,25 @@ export class RegistrationComponent extends BaseForm implements OnInit {
     this.initializeRegistrationForm();
   }
 
-  public initializeRegistrationForm(user?: UserModel): void {
+  public initializeRegistrationForm(): void {
     this.theForm = new FormGroup({
       email: new FormControl(
-        user ? user.email : 'Email needed reg',
+        'Email needed reg',
         [Validators.required]
       ),
       password: new FormControl(
-        user ? user.password : 'Password needed reg',
+        'Password needed reg',
         [Validators.required]
       )
     });
   }
 
-  onSignUp(): Promise<boolean> {
-    super.onSignUp().then(
+  onSubmit(): Promise<boolean> {
+    super.onSubmit().then(
       value => {
         if (value) {
           console.log('Registration success');
-          this.router.navigate(['home']);
+          this.router.navigate(['/']);
         } else {
           console.log('Registration not a success');
         }

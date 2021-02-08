@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   exports: [
-    AngularMaterialModule
+    AngularMaterialModule,
   ]
 })
 export class SharedModule { }

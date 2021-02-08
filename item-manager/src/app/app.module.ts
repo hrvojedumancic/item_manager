@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FirstComponentComponent } from './first-component/first-component.component';
+import { LoginModule } from './modules/login/login.module';
+import { RegistrationModule } from './modules/registration/registration.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 
 @NgModule({
@@ -15,8 +17,10 @@ import { FirstComponentComponent } from './first-component/first-component.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
-    BrowserAnimationsModule
+    LoginModule,
+    RegistrationModule,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

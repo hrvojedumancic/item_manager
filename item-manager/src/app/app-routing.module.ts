@@ -6,7 +6,7 @@ import { AuthGuard } from './modules/shared/services/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: NavigationComponent,
     canActivate: [AuthGuard],
     children: [
@@ -17,13 +17,14 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
-    loadChildren: () => import('./modules/auth/auth.module').
-      then(m => m.AuthModule)
+    path: 'login',
+    loadChildren: () => import('./modules/login/login.module').
+      then(m => m.LoginModule)
   },
   {
-    path: 'login',
-    redirectTo: ''
+    path: 'registration',
+    loadChildren: () => import('./modules/registration/registration.module').
+      then(m => m.RegistrationModule)
   }
 ];
 
