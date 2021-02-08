@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,17 @@ export class AngularFireService {
     )
   }
 
-  public googleSignIn() {
-    return this.fireAuth.signInWithPopup(new auth.onGoogleSignIn());
+  public googleSignIn(): Promise<boolean> {
+    return this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+      value => {
+        console.log('Sign in with google (success): ', value);
+        return Promise.resolve(true);
+      },
+      error => {
+        console.log('Sign in with google (fail): ', error);
+        return Promise.resolve(false);
+      }
+    );
   }
 
   public getIsUserLoggedIn(): boolean {

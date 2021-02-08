@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from './modules/angular-material.module';
-import { AngularFireModule } from '@angular/fire';
+import { AngularFireModule, FirebaseApp } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { NavigationComponent } from './components/navigation/navigation.component';

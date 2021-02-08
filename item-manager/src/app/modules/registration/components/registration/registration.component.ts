@@ -35,18 +35,31 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   onSubmit(): Promise<boolean> {
-    super.onSubmit().then(
-      value => {
-        if (value) {
+    return super.onSubmit().then(
+      (response: boolean) => {
+        if (response) {
           console.log('Registration success');
           this.router.navigate(['/']);
         } else {
           console.log('Registration not a success');
         }
-        return Promise.resolve(value);
+        return Promise.resolve(response);
       }
     )
-    return Promise.resolve(null);
+  }
+
+  public onGoogleSubmit(): Promise<boolean> {
+    return super.onGoogleSubmit().then(
+      (response: boolean) => {
+        if (response) {
+          console.log('Registration with google success');
+          this.router.navigate(['/']);
+        } else {
+          console.log('Registration with google is unssucessful');
+        }
+        return Promise.resolve(response);
+      }
+    );
   }
 
   protected apiRequest(formData: any): Observable<any> {

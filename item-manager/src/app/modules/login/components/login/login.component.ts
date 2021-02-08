@@ -34,22 +34,30 @@ export class LoginComponent extends LoginForm implements OnInit {
     });
   }
 
-  public onGoogleSignIn() {
-    
-  }
-
-  onSubmit(): Promise<boolean> {
-    super.onSubmit().then(
-      value => {
-        if (value) {
+  public onGoogleSubmit(): Promise<boolean> {
+    return super.onGoogleSubmit().then(
+      (response: boolean) => {
+        if (response) {
           this.router.navigate(['/']).then();
         } else {
           console.log('Login is unssucessful');
         }
-        return Promise.resolve(value);
+        return Promise.resolve(response);
       }
     );
-    return Promise.resolve(null);
+  }
+
+  onSubmit(): Promise<boolean> {
+    return super.onSubmit().then(
+      (response: boolean) => {
+        if (response) {
+          this.router.navigate(['/']).then();
+        } else {
+          console.log('Login is unssucessful');
+        }
+        return Promise.resolve(response);
+      }
+    );
   }
 
   protected apiRequest(formData: any): Observable<any> {
