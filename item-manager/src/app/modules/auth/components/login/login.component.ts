@@ -41,7 +41,7 @@ export class LoginComponent extends BaseForm implements OnInit {
         if (value) {
           this.router.navigate(['home']).then();
         } else {
-          console.log('Login is insucessful');
+          console.log('Login is unssucessful');
         }
         return Promise.resolve(value);
       }
