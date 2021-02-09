@@ -18,7 +18,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     RouterModule
   ],
   exports: [
-    AngularMaterialModule,
+    AngularMaterialModule
   ]
 })
 export class SharedModule { }
