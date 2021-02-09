@@ -4,6 +4,7 @@ import { AngularFireService } from "../../services/auth.service";
 
 export abstract class BaseForm {
 
+    public formLoaded: boolean = false;
     public theForm: FormGroup;
     protected angularFireService: AngularFireService;
     protected abstract apiRequest(formData: any): Observable<any>;

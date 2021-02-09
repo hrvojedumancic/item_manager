@@ -18,10 +18,23 @@ export class LoginComponent extends LoginForm implements OnInit {
   }
   
   ngOnInit(): void {
-    this.initializeLoginForm();
+    console.log('Is user logged in: ', this.afService.isUserLoggedIn());
+    console.log('Test 1');
+    if (this.afService.isUserLoggedIn()) {
+      console.log('Test 2');
+      this.router.navigate(['/']);
+    } else {
+      console.log('Test 3');
+      this.initializeLoginForm().then(
+        value => {
+          this.formLoaded = true;
+        }
+      );
+    }
+    console.log('Test 4');
   }
 
-  public initializeLoginForm(): void {
+  public initializeLoginForm(): Promise<boolean> {
     this.theForm = new FormGroup({
       email: new FormControl(
         'admin@admin.test',
@@ -32,6 +45,7 @@ export class LoginComponent extends LoginForm implements OnInit {
         [Validators.required]
       )
     });
+    return Promise.resolve(true);
   }
 
   public onGoogleSubmit(): Promise<boolean> {

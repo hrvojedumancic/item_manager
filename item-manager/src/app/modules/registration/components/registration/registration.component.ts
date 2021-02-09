@@ -18,10 +18,18 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeRegistrationForm();
+    if (this.afService.isUserLoggedIn()) {
+      this.router.navigate(['/']);
+    } else {
+      this.initializeRegistrationForm().then(
+        value => {
+          this.formLoaded = true;
+        }
+      );
+    }
   }
 
-  public initializeRegistrationForm(): void {
+  public initializeRegistrationForm(): Promise<boolean> {
     this.theForm = new FormGroup({
       email: new FormControl(
         'Email needed reg',
@@ -32,6 +40,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
         [Validators.required]
       )
     });
+    return Promise.resolve(true);
   }
 
   onSubmit(): Promise<boolean> {
@@ -39,7 +48,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
       (response: boolean) => {
         if (response) {
           console.log('Registration success');
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then();
         } else {
           console.log('Registration not a success');
         }
@@ -53,7 +62,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
       (response: boolean) => {
         if (response) {
           console.log('Registration with google success');
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then();
         } else {
           console.log('Registration with google is unssucessful');
         }

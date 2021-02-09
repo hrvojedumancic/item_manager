@@ -1,50 +1,52 @@
 Registration page
-<div>
-    <form [formGroup]="theForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance='outline'>
-            <mat-label>Email:</mat-label>
-            <input
-                matInput
-                formControlName='email'
-                type='text'
+<div *ngIf='formLoaded'>
+    <div>
+        <form [formGroup]="theForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance='outline'>
+                <mat-label>Email:</mat-label>
+                <input
+                    matInput
+                    formControlName='email'
+                    type='text'
+                >
+
+                <mat-hint *ngIf="isFieldInvalid('email')">
+                    Field is invalid
+                </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance='outline'>
+                <mat-label>Password:</mat-label>
+                <input
+                    matInput
+                    formControlName='password'
+                    type='text'
+                >
+            </mat-form-field>
+
+            <button
+                mat-raised-button
+                type='submit'
+                [disabled]='isSubmitDisabled()'
             >
+            Register
+            </button>
+        </form>
+    </div>
 
-            <mat-hint *ngIf="isFieldInvalid('email')">
-                Field is invalid
-            </mat-hint>
-        </mat-form-field>
+    <button
+        mat-raised-button
+        type='button'
+        (click)='onGoogleSubmit()'
+    >
+        Register with Google
+    </button>
 
-        <mat-form-field appearance='outline'>
-            <mat-label>Password:</mat-label>
-            <input
-                matInput
-                formControlName='password'
-                type='text'
-            >
-        </mat-form-field>
-
-        <button
-            mat-raised-button
-            type='submit'
-            [disabled]='isSubmitDisabled()'
-        >
-        Register
-        </button>
-    </form>
+    <button
+        mat-raised-button
+        type='button'
+        (click)='redirectToLogin()'
+    >
+        Log in
+    </button>
 </div>
-
-<button
-    mat-raised-button
-    type='button'
-    (click)='onGoogleSubmit()'
->
-    Register with Google
-</button>
-
-<button
-    mat-raised-button
-    type='button'
-    (click)='redirectToLogin()'
->
-    Log in
-</button>

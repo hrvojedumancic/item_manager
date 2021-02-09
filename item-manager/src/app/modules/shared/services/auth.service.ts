@@ -51,7 +51,11 @@ export class AngularFireService {
     );
   }
 
-  public getIsUserLoggedIn(): boolean {
+  public signOut() {
+    this.fireAuth.signOut();
+  }
+
+  public isUserLoggedIn(): boolean {
     return this.isLoggedIn;
   }
 }
