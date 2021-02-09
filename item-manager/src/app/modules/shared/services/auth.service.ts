@@ -16,42 +16,48 @@ export class AngularFireService {
   }
 
   public signUp(email: string, password: string): Promise<boolean> {
-    return this.fireAuth.createUserWithEmailAndPassword(email, password).then(
-      value => {
-        console.log('Signed up to firebase. Response: ', value);
-        return Promise.resolve(true);
-      },
-      error => {
-        console.log('Sign up is not successful', error);
-        return Promise.resolve(false);
-      }
-    )
+    return new Promise((resolve) => {
+      this.fireAuth.createUserWithEmailAndPassword(email, password).then(
+        value => {
+          console.log('Signed up to firebase. Response: ', value);
+          return resolve(true);
+        },
+        error => {
+          console.log('Sign up is not successful', error);
+          return resolve(false);
+        }
+      )
+    });
   }
 
   public signIn(email: string, password: string): Promise<boolean> {
-    return this.fireAuth.signInWithEmailAndPassword(email, password).then(
-      value => {
-        console.log('Signed in to firebase. Response: ', value);
-        return Promise.resolve(true);
-      },
-      error => {
-        console.log(error);
-        return Promise.resolve(false);
-      }
-    )
+    return new Promise((resolve) => {
+      this.fireAuth.signInWithEmailAndPassword(email, password).then(
+        value => {
+          console.log('Signed in to firebase. Response: ', value);
+          return resolve(true);
+        },
+        error => {
+          console.log(error);
+          return resolve(false);
+        }
+      )
+    });
   }
 
   public googleSignIn(): Promise<boolean> {
-    return this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
-      value => {
-        console.log('Sign in with google (success): ', value);
-        return Promise.resolve(true);
-      },
-      error => {
-        console.log('Sign in with google (fail): ', error);
-        return Promise.resolve(false);
-      }
-    );
+    return new Promise((resolve) => {
+      this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+        value => {
+          console.log('Sign in with google (success): ', value);
+          return resolve(true);
+        },
+        error => {
+          console.log('Sign in with google (fail): ', error);
+          return resolve(false);
+        }
+      )
+    });
   }
 
   public signOut() {

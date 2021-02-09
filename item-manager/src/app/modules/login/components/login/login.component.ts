@@ -44,16 +44,18 @@ export class LoginComponent extends LoginForm implements OnInit {
   }
 
   public onGoogleSubmit(): Promise<boolean> {
-    return super.onGoogleSubmit().then(
-      (response: boolean) => {
-        if (response) {
-          this.router.navigate(['/']).then();
-        } else {
-          console.log('Login is unssucessful');
+    return new Promise((resolve) => {
+      super.onGoogleSubmit().then(
+        (response: boolean) => {
+          if (response) {
+            this.router.navigate(['/']).then();
+          } else {
+            console.log('Login is unssucessful');
+          }
+          return resolve(response);
         }
-        return Promise.resolve(response);
-      }
-    );
+      );
+    });
   }
 
   onSubmit(): Promise<boolean> {

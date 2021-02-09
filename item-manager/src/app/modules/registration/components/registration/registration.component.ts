@@ -44,16 +44,18 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   onSubmit(): Promise<boolean> {
-    return super.onSubmit().then(
-      (response: boolean) => {
-        if (response) {
-          console.log('Registration success');
-          this.router.navigate(['/']).then();
-        } else {
-          console.log('Registration not a success');
-        }
-        return Promise.resolve(response);
-      }
+    return new Promise((resolve) => {
+      super.onSubmit().then(
+        (response: boolean) => {
+          if (response) {
+            console.log('Registration success');
+            this.router.navigate(['/']).then();
+          } else {
+            console.log('Registration not a success');
+          }
+          return resolve(response);
+        });
+    }
     )
   }
 

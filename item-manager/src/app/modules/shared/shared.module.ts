@@ -6,9 +6,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [NavigationComponent],
+  declarations: [NavigationComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
     AngularMaterialModule,

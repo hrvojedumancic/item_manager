@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FirstComponentComponent } from './first-component/first-component.component';
 import { NavigationComponent } from './modules/shared/components/navigation/navigation.component';
+import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 import { AuthGuard } from './modules/shared/services/guards/auth.guard';
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./modules/registration/registration.module').
       then(m => m.RegistrationModule)
-  }
+  },
+  { path: '**', component: PageNotFoundComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
