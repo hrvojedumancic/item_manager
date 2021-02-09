@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AngularFireService {
-  private isLoggedIn: boolean = false;
+  public signedIn: Observable<any>;
 
-  constructor(private fireAuth: AngularFireAuth) { }
+  constructor(private fireAuth: AngularFireAuth) {
+    this.signedIn = new Observable((subscriber) => {
+      this.fireAuth.onAuthStateChanged(subscriber);
+  });
+  }
 
   public signUp(email: string, password: string): Promise<boolean> {
     return this.fireAuth.createUserWithEmailAndPassword(email, password).then(
       value => {
-        this.isLoggedIn = true;
         console.log('Signed up to firebase. Response: ', value);
         return Promise.resolve(true);
       },
@@ -27,7 +31,6 @@ export class AngularFireService {
   public signIn(email: string, password: string): Promise<boolean> {
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(
       value => {
-        this.isLoggedIn = true;
         console.log('Signed in to firebase. Response: ', value);
         return Promise.resolve(true);
       },
@@ -55,7 +58,17 @@ export class AngularFireService {
     this.fireAuth.signOut();
   }
 
-  public isUserLoggedIn(): boolean {
-    return this.isLoggedIn;
+  public async isUserLoggedIn(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.signedIn.subscribe(
+        value => {
+          if (value !== null) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }
+      )
+    });
   }
 }

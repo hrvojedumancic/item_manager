@@ -10,12 +10,15 @@ export class AuthGuard implements CanActivate {
   constructor(private afService: AngularFireService, 
     private router: Router) { }
 
-  canActivate(): boolean {
-    console.log('Is user logged in: ', this.afService.isUserLoggedIn());
-    if (!this.afService.isUserLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
-    return this.afService.isUserLoggedIn();
+  canActivate(): Promise<boolean> {
+    return this.afService.isUserLoggedIn().then (
+      value => {
+        if (!value) {
+          this.router.navigate(['/login']);
+        }
+        return value;
+      }
+    );
   }
   
 }

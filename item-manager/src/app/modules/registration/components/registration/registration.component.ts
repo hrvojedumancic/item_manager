@@ -18,18 +18,18 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.afService.isUserLoggedIn()) {
-      this.router.navigate(['/']);
-    } else {
-      this.initializeRegistrationForm().then(
-        value => {
-          this.formLoaded = true;
+    this.afService.isUserLoggedIn().then(
+      value => {
+        if (value) {
+          this.router.navigate(['/']);
+        } else {
+          this.initializeRegistrationForm();
         }
-      );
-    }
+      }
+    )
   }
 
-  public initializeRegistrationForm(): Promise<boolean> {
+  public initializeRegistrationForm() {
     this.theForm = new FormGroup({
       email: new FormControl(
         'Email needed reg',
@@ -40,7 +40,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
         [Validators.required]
       )
     });
-    return Promise.resolve(true);
+    this.formLoaded = true;
   }
 
   onSubmit(): Promise<boolean> {
