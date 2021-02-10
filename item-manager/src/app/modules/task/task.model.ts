@@ -3,5 +3,5 @@ export interface TaskModel {
     created_at: string,
     updated_at: string,
     deleted_at: string,
-    subtasks: TaskModel[]
+    subtasks: string[]
 };

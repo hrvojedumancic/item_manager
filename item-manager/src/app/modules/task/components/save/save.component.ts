@@ -55,7 +55,7 @@ export class SaveComponent extends BaseForm implements OnInit {
           ]
       ),
       subtasks: new FormArray(
-        this.task.subtasks.map(data => new FormControl(data.name))
+        this.task.subtasks.map(data => new FormControl(data))
       )
     });
     this.formLoaded = true;
@@ -64,7 +64,7 @@ export class SaveComponent extends BaseForm implements OnInit {
   public addNewSubtask() {
     const subtasks = this.theForm.get('subtasks') as FormArray;
     subtasks.push(new FormControl('', [Validators.required]));
-    this.task.subtasks.push(this.taskService.getEmptyTaskObject());
+    this.task.subtasks.push('');
   }
 
   onSubmit() {

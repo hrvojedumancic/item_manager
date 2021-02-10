@@ -5,6 +5,7 @@ import { AngularFireService } from '../../../shared/services/auth.service';
 import { TaskModel } from '../../task.model';
 import { map } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
+import { TaskModule } from '../../task.module';
 
 @Component({
   selector: 'app-list',
@@ -12,6 +13,7 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  public formLoaded: boolean = false;
   public tasks: TaskModel[] = [];
   private userId: string;
   private readonly taskId: string = null;
@@ -44,8 +46,11 @@ export class ListComponent implements OnInit {
 
   public getUserTaskCollection() {
     this.taskService.getTaskPath(this.userId).valueChanges().subscribe(
-      value => {
+      (value: TaskModel[]) => {
         console.log(value);
+        this.tasks = value as TaskModel[];
+        console.log(this.tasks);
+        this.formLoaded = true;
       }
     );
   }

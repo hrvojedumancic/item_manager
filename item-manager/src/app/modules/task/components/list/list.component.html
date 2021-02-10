@@ -1,1 +1,19 @@
-<p>list works!</p>
+<div *ngIf="formLoaded">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div *ngFor="let task of tasks">
+                <tr>
+                    <td>{{ task.name }}</td>
+                </tr>
+                <tr *ngFor="let subtask of task.subtasks">
+                    <td>{{ subtask }}</td>
+                </tr>
+            </div>
+        </tbody>
+    </table>
+</div>
