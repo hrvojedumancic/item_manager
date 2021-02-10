@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
+import { MessageOption } from '../models/messages.model';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -20,12 +21,11 @@ export class AngularFireService {
     return new Promise((resolve) => {
       this.fireAuth.createUserWithEmailAndPassword(email, password).then(
         value => {
-          this.messageService.displayMessage();
-          console.log('Signed up to firebase. Response: ', value);
+          this.messageService.displayMessage('Successful app sign up', MessageOption.SUCCESS);
           return resolve(true);
         },
         error => {
-          console.log('Sign up is not successful', error);
+          this.messageService.displayMessage('Unsuccessful app sign up', MessageOption.ERROR);
           return resolve(false);
         }
       )
@@ -36,12 +36,11 @@ export class AngularFireService {
     return new Promise((resolve) => {
       this.fireAuth.signInWithEmailAndPassword(email, password).then(
         value => {
-          this.messageService.displayMessage();
-          console.log('Signed in to firebase. Response: ', value);
+          this.messageService.displayMessage('Successful app sign in', MessageOption.SUCCESS);
           return resolve(true);
         },
         error => {
-          console.log(error);
+          this.messageService.displayMessage('Unsuccessful app sign in', MessageOption.ERROR);
           return resolve(false);
         }
       )
@@ -52,11 +51,11 @@ export class AngularFireService {
     return new Promise((resolve) => {
       this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         value => {
-          console.log('Sign in with google (success): ', value);
+          this.messageService.displayMessage('Successful app Google sign in', MessageOption.SUCCESS);
           return resolve(true);
         },
         error => {
-          console.log('Sign in with google (fail): ', error);
+          this.messageService.displayMessage('Successful app Google sign in', MessageOption.ERROR);
           return resolve(false);
         }
       )
