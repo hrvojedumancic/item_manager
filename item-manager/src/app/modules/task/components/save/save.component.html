@@ -1,0 +1,44 @@
+<p>save works!</p>
+<p>-----------------</p>
+
+<div *ngIf="formLoaded">
+    <form [formGroup]="theForm">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Task name</mat-label>
+            <input
+                matInput
+                formControlName='name'
+                type='text'
+                placeholder='Task name'
+            >
+        </mat-form-field>
+
+        <div *ngIf="task.subtasks">
+            <div *ngFor="let subtask of task.subtasks; let i = index" formArrayName="subtasks">
+                <mat-form-field appearance="outline">
+                    <mat-label>Subtask name</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        [formControlName]="i" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <button
+            mat-raised-button
+            (click)="addNewSubtask()"
+        >
+            Add new subtask
+        </button>
+
+        <button
+            mat-raised-button
+            (click)="onSubmit()"
+            [disabled]='isSubmitDisabled()'
+        >
+            Create new task
+        </button>
+    </form>
+</div>

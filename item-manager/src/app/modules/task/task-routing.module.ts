@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListComponent } from './list/list.component';
-import { ReadComponent } from './read/read.component';
-import { SaveComponent } from './save/save.component';
+import { ListComponent } from './components/list/list.component';
+import { ReadComponent } from './components/read/read.component';
+import { SaveComponent } from './components/save/save.component';
 
 const routes: Routes = [
     {

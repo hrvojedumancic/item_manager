@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [NavigationComponent, PageNotFoundComponent],
@@ -15,6 +16,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     AngularMaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     RouterModule
   ],
   exports: [

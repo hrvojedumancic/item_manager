@@ -7,9 +7,6 @@ import { FirstComponentComponent } from './first-component/first-component.compo
 import { LoginModule } from './modules/login/login.module';
 import { RegistrationModule } from './modules/registration/registration.module';
 import { SharedModule } from './modules/shared/shared.module';
-import { ListComponent } from './modules/task/list/list.component';
-import { ReadComponent } from './modules/task/read/read.component';
-import { SaveComponent } from './modules/task/save/save.component';
 import { TaskModule } from './modules/task/task.module';
 
 

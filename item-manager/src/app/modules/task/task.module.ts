@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { ListComponent } from './list/list.component';
-import { ReadComponent } from './read/read.component';
-import { SaveComponent } from './save/save.component';
+import { ListComponent } from './components/list/list.component';
+import { ReadComponent } from './components/read/read.component';
+import { SaveComponent } from './components/save/save.component';
 import { TaskRoutingModule } from './task-routing.module';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { TaskRoutingModule } from './task-routing.module';
         ReadComponent,
     ],
     imports: [
+        CommonModule,
         SharedModule,
         TaskRoutingModule
     ]
