@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AngularFireService {
   public signedIn: Observable<any>;
 
-  constructor(private fireAuth: AngularFireAuth) {
+  constructor(private fireAuth: AngularFireAuth, private messageService: MessageService) {
     this.signedIn = new Observable((subscriber) => {
       this.fireAuth.onAuthStateChanged(subscriber);
   });
@@ -19,6 +20,7 @@ export class AngularFireService {
     return new Promise((resolve) => {
       this.fireAuth.createUserWithEmailAndPassword(email, password).then(
         value => {
+          this.messageService.displayMessage();
           console.log('Signed up to firebase. Response: ', value);
           return resolve(true);
         },
@@ -34,6 +36,7 @@ export class AngularFireService {
     return new Promise((resolve) => {
       this.fireAuth.signInWithEmailAndPassword(email, password).then(
         value => {
+          this.messageService.displayMessage();
           console.log('Signed in to firebase. Response: ', value);
           return resolve(true);
         },
