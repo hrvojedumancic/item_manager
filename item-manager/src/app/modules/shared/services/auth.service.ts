@@ -62,8 +62,8 @@ export class AngularFireService {
     });
   }
 
-  public signOut() {
-    this.fireAuth.signOut();
+  public signOut(): Promise<void> {
+    return this.fireAuth.signOut();
   }
 
   public async isUserLoggedIn(): Promise<boolean> {
