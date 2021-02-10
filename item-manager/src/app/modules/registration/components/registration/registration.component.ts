@@ -48,7 +48,6 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
       super.onSubmit().then(
         (response: boolean) => {
           if (response) {
-            console.log('Registration success');
             this.router.navigate(['/']).then();
           } else {
             console.log('Registration not a success');
@@ -63,7 +62,6 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
     return super.onGoogleSubmit().then(
       (response: boolean) => {
         if (response) {
-          console.log('Registration with google success');
           this.router.navigate(['/']).then();
         } else {
           console.log('Registration with google is unssucessful');
