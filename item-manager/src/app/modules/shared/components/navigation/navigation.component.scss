@@ -1,0 +1,19 @@
+.container__wrapper__navigation {
+    background-color: gold;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+
+    &__left-side, &__right-side {
+        
+        a {
+            color: black;
+            text-decoration: none;
+            &:not(:last-child) {
+                margin-right: 5px;
+            }
+        }
+    }
+}

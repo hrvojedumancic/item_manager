@@ -9,7 +9,9 @@ export class MessageService {
 
      constructor(private snackBar: MatSnackBar) {}
 
-     displayMessage(message: string, action: MessageOption) {
-        this.snackBar.open(message, action);
+     displayMessage(message: string, action?: MessageOption) {
+        this.snackBar.open(message, action || null, {
+            duration: action === MessageOption.ERROR ? 10000 : 5000
+        });
      }
 }

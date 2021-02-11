@@ -1,0 +1,55 @@
+.forms {
+    padding: 10px;
+    background-color: pink;
+    mat-form-field.mat-form-field {
+        display: block;
+    }
+
+    &--width-500-px {
+        width: 500px;
+    }
+}
+
+.title {
+    text-align: center;
+}
+
+.plain-text {
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+
+    &--hover {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: grey;
+    padding: 10px;
+    font-size: 14px;
+
+    div {
+        display: block;
+    }
+
+    button {
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        // display: block;
+        &:not(:last-child) {
+            margin-right: 5px;
+            //margin-bottom: 5px;
+        }
+    }
+
+    &--big {
+        font-size: 20px;
+    }
+}

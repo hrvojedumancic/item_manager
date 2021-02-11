@@ -30,7 +30,7 @@ export class AngularFireService {
             testDoc: 'TestDocValue'
           });
           console.log('Log in response value: ', response);
-          this.messageService.displayMessage('Successful app sign up', MessageOption.SUCCESS);
+          this.messageService.displayMessage('Registration successful');
           return resolve(true);
         },
         error => {
@@ -45,7 +45,7 @@ export class AngularFireService {
     return new Promise((resolve, reject) => {
       this.fireAuth.signInWithEmailAndPassword(email, password).then(
         response => {
-          this.messageService.displayMessage('Successful app sign in', MessageOption.SUCCESS);
+          this.messageService.displayMessage('Login successful');
           return resolve(true);
         },
         error => {
@@ -60,7 +60,7 @@ export class AngularFireService {
     return new Promise((resolve, reject) => {
       this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         response => {
-          this.messageService.displayMessage('Successful app Google sign in', MessageOption.SUCCESS);
+          this.messageService.displayMessage('Google login successful');
           return resolve(true);
         },
         error => {
