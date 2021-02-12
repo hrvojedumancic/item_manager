@@ -1,1 +1,18 @@
-<p>read works!</p>
+<div *ngIf="task">
+    <div>
+        <span class="task-attribute">{{ 'Name' }}: </span>
+        <span>{{ task.name }}</span>
+    </div>
+    <div>
+        <span class="task-attribute">{{ 'Description' }}: </span>
+        <span>{{ task.description }}</span>
+    </div>
+    <div>
+        <span class="task-attribute">{{ 'Created at' }}: </span>
+        <span>{{ task.created_at }}</span>
+    </div>
+    <div>
+        <span class="task-attribute">{{ 'Subtasks' }}: </span>
+        <span>{{ 'Subtasksss' }}</span>
+    </div>
+</div>

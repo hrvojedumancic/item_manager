@@ -1,7 +1,8 @@
 export interface TaskModel {
+    id: string;
     name: string,
     created_at: string,
-    updated_at: string,
-    deleted_at: string,
+    description: string,
+    completed: boolean,
     subtasks: string[]
 };

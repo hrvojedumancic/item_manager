@@ -54,32 +54,17 @@
     }
 }
 
-.table {
-    width: 100%;
-    background-color: hotpink;
-    padding: 5px;
-    border-collapse: collapse;
-    table-layout: fixed;
+.form {
+    display: grid;
+}
 
-    &__actions {
-        display: flex;
-        align-items: center;
+.table {
+    background-color: red;
+    mat-header-cell.mat-header-cell {
         justify-content: center;
     }
 
-    thead {
-        background-color: ivory;
-        tr > th {
-            padding: 10px;
-            text-align: center;
-        }
-    }
-
-    tr {
-        text-align: center;
-    }
-
-    td {
-        line-height: 30px;
+    mat-cell.mat-cell {
+        justify-content: center;
     }
 }

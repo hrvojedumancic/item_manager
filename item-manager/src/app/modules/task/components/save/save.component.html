@@ -1,11 +1,8 @@
-<p>save works!</p>
-<p>-----------------</p>
-
 <div *ngIf="formLoaded">
-    <form [formGroup]="theForm">
+    <form [formGroup]="theForm" class="form">
 
         <mat-form-field appearance="outline">
-            <mat-label>Task name</mat-label>
+            <mat-label>{{ 'Name' }}</mat-label>
             <input
                 matInput
                 formControlName='name'
@@ -14,8 +11,18 @@
             >
         </mat-form-field>
 
-        <div *ngIf="task.subtasks">
-            <div *ngFor="let subtask of task.subtasks; let i = index" formArrayName="subtasks">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'Description' }}</mat-label>
+            <input
+                matInput
+                formControlName='description'
+                type='text'
+                placeholder='Task name'
+            >
+        </mat-form-field>
+
+        <ng-container *ngIf="task.subtasks">
+            <ng-container *ngFor="let subtask of task.subtasks; let i = index" formArrayName="subtasks">
                 <mat-form-field appearance="outline">
                     <mat-label>Subtask name</mat-label>
                     <input
@@ -23,22 +30,23 @@
                         type="text"
                         [formControlName]="i" />
                 </mat-form-field>
-            </div>
-        </div>
+            </ng-container>
+        </ng-container>
 
-        <button
+        <div class="buttons">
+            <button
             mat-raised-button
             (click)="addNewSubtask()"
-        >
-            Add new subtask
-        </button>
-
-        <button
-            mat-raised-button
-            (click)="onSubmit()"
-            [disabled]='isSubmitDisabled()'
-        >
-            Create new task
-        </button>
+            >
+                Add new subtask
+            </button>
+            <button
+                mat-raised-button
+                (click)="onSubmit()"
+                [disabled]='isSubmitDisabled()'
+            >
+                Create new task
+            </button>
+        </div>
     </form>
 </div>

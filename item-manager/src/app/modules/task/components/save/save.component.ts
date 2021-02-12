@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BaseForm } from 'src/app/modules/shared/components/base-form/base-form.component';
-import { Collections } from 'src/app/modules/shared/models/collections.model';
 import { MessageOption } from 'src/app/modules/shared/models/messages.model';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
 import { MessageService } from 'src/app/modules/shared/services/message.service';
@@ -22,11 +20,11 @@ export class SaveComponent extends BaseForm implements OnInit {
   private readonly taskId: string = null;
 
   constructor(
-    private firestore: AngularFirestore,
     private afService: AngularFireService,
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
-    private taskService: TaskService)
+    private taskService: TaskService,
+    private router: Router)
     {
       super(afService);
       this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -40,7 +38,7 @@ export class SaveComponent extends BaseForm implements OnInit {
         if (this.taskId === null) {
           this.initializeForm();
         } else {
-          this.taskService.getTaskObject(this.userId);
+          this.getTaskObject();
         }
       }
     )
@@ -52,6 +50,12 @@ export class SaveComponent extends BaseForm implements OnInit {
           this.task.name,
           [
               Validators.required
+          ]
+      ),
+      description: new FormControl(
+          this.task.description,
+          [
+            Validators.required
           ]
       ),
       subtasks: new FormArray(
@@ -67,15 +71,29 @@ export class SaveComponent extends BaseForm implements OnInit {
     this.task.subtasks.push('');
   }
 
+  public getTaskObject() {
+    this.taskService.getTaskObject(this.userId, this.taskId).then(
+      (response: TaskModel) => {
+        this.task = response;
+        this.initializeForm();
+      },
+      (error: any) => {
+        this.messageService.displayMessage('Error while getting task object', MessageOption.OK);
+      }
+    )
+  }
+
   onSubmit() {
     const formData = this.theForm.value;
-    console.log('Form data: ', formData);
+    formData.created_at = (new Date().toISOString());
+    formData.completed = false;
     this.taskService.getTaskPath(this.userId).add(formData).then(
       (response: any) => {
         this.messageService.displayMessage('Success adding to firestore', MessageOption.SUCCESS);
+        this.router.navigate(['/']);
       },
       (error: any) => {
-        this.messageService.displayMessage('Fail adding to firestore', MessageOption.ERROR);
+        this.messageService.displayMessage('Failed adding task to firestore', MessageOption.OK);
       }
     )
   }

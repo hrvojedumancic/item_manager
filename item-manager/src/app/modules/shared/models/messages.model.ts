@@ -1,7 +1,8 @@
 
 export enum MessageOption {
     SUCCESS = 'Success',
-    ERROR = 'Error'
+    ERROR = 'Error',
+    OK = 'Ok'
 }
 
 export function MessageOptionMap(): MessageOption[] {

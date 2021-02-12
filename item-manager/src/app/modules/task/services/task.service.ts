@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
+import { rejects } from 'assert';
 import { Collections } from '../../shared/models/collections.model';
+import { MessageOption } from '../../shared/models/messages.model';
+import { MessageService } from '../../shared/services/message.service';
 import { TaskModel } from '../task.model';
 
 @Injectable({
@@ -8,13 +11,15 @@ import { TaskModel } from '../task.model';
 })
 export class TaskService {
 
-    constructor(private firestore: AngularFirestore) {}
+    constructor(private firestore: AngularFirestore,
+        private messageService: MessageService) {}
 
     public getEmptyTaskObject(): TaskModel {
         const task: TaskModel = {
             created_at: null,
-            deleted_at: null,
-            updated_at: null,
+            description: null,
+            id: null,
+            completed: false,
             name: null,
             subtasks: []
         }
@@ -28,15 +33,70 @@ export class TaskService {
         .collection(Collections.TASKS);
     }
 
-    public getTaskObject(userId: string) {
-        this.firestore.collection(Collections.USERS)
-          .doc(userId)
-          .collection(Collections.TASKS)
-          .doc().get().subscribe(
-            value => {
-              console.log(value);
-            }
-          ) 
-      }
+    public getTaskObject(userId: string, taskId: string): Promise<TaskModel> | null {
+        return new Promise((resolve, reject) => {
+            this.firestore.collection(Collections.USERS)
+            .doc(userId)
+            .collection(Collections.TASKS)
+            .doc(taskId).valueChanges().subscribe(
+                (response: TaskModel) => {
+                    if (response !== null && response !== undefined) {
+                        resolve(response);
+                    } else {
+                        this.messageService.displayMessage(
+                            'Error while getting single task',
+                            MessageOption.OK
+                        );
+                        reject(null);
+                    }
+                },
+                (error: any) => {
+                    this.messageService.displayMessage('Error while getting single task', MessageOption.OK);
+                    reject(null);
+                }
+            )
+        }); 
+    }
+
+    public deleteTask(userId: string, taskId: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.firestore.collection(Collections.USERS)
+            .doc(userId)
+            .collection(Collections.TASKS)
+            .doc(taskId)
+            .delete().then(
+                (response: any) => {
+                    this.messageService.displayMessage('Task deleted', MessageOption.SUCCESS);
+                    resolve(true);
+                },
+                (error: any) => {
+                    this.messageService.displayMessage('Unable to delete task', MessageOption.ERROR);
+                    reject;
+                }
+            )
+        })
+    }
+
+    public getUserTaskCollection(userId: string): Promise<TaskModel[]> | null {
+        return new Promise((resolve, reject) => {
+            this.getTaskPath(userId).snapshotChanges().subscribe(
+                (value: DocumentData[]) => {
+                  const tasks: TaskModel[] = [];
+                  value.forEach(element => {
+                    let document = element.payload.doc;
+                    let task = document.data() as TaskModel;
+                    task.id = document.id;
+                    tasks.push(task);
+                  });
+                  resolve(tasks);
+                },
+                (error: any) => {
+                    console.log('Error while trying to fetch user task collection: ', error);
+                    this.messageService.displayMessage('Unable to fetch tasks', MessageOption.OK);
+                    reject(null);
+                }
+              );
+        })
+    }
 
 }
