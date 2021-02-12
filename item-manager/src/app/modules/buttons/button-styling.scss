@@ -4,4 +4,14 @@ button {
     justify-content: center;
     border: none;
     background-color: transparent;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.delete-button {
+        mat-icon.mat-icon {
+            color: red;
+        }
+    }
 }

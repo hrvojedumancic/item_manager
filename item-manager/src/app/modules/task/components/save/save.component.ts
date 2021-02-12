@@ -85,6 +85,9 @@ export class SaveComponent extends BaseForm implements OnInit {
 
   onSubmit() {
     const formData = this.theForm.value;
+
+    console.log(this.theForm);
+    return;
     formData.created_at = (new Date().toISOString());
     formData.completed = false;
     this.taskService.getTaskPath(this.userId).add(formData).then(

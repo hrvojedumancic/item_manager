@@ -1,11 +1,6 @@
 <div *ngIf="tasks.length > 0; else empty">
     <mat-table [dataSource]="tasks" class="table">
-
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>{{ 'ID' }}</mat-header-cell>
-            <mat-cell *matCellDef="let task">{{ task.id }}</mat-cell>
-        </ng-container>
-
+        
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>{{ 'Name' }}</mat-header-cell>
             <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>

@@ -4,6 +4,8 @@ import { ReadButtonComponent } from './components/read-button/read-button.compon
 import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -15,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   exports: [
     ReadButtonComponent,

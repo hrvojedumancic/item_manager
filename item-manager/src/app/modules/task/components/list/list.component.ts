@@ -19,7 +19,6 @@ export class ListComponent implements OnInit {
   private readonly taskId: string = null;
   public displayedColumns: string[] = 
   [
-    'id',
     'name',
     'description',
     'created_at',

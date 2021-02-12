@@ -9,6 +9,10 @@
                 type='text'
                 placeholder='Task name'
             >
+
+            <mat-hint *ngIf="isFieldControlInvalid('name')">
+                {{ 'Name required' }}
+            </mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -17,8 +21,12 @@
                 matInput
                 formControlName='description'
                 type='text'
-                placeholder='Task name'
+                placeholder='Task description'
             >
+
+            <mat-hint *ngIf="isFieldControlInvalid('description')">
+                {{ 'Description required' }}
+            </mat-hint>
         </mat-form-field>
 
         <ng-container *ngIf="task.subtasks">
@@ -28,7 +36,12 @@
                     <input
                         matInput
                         type="text"
-                        [formControlName]="i" />
+                        [formControlName]="i" 
+                    >
+
+                    <mat-hint *ngIf="isFieldArrayInvalid('subtasks', null, i)">
+                        {{ 'Subtask required' }}
+                    </mat-hint>
                 </mat-form-field>
             </ng-container>
         </ng-container>

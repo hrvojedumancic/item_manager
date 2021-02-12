@@ -1,4 +1,4 @@
-import { EmailValidator, FormControl, FormGroup } from "@angular/forms";
+import { EmailValidator, FormArray, FormControl, FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
 import { AngularFireService } from "../../services/auth.service";
 
@@ -15,12 +15,28 @@ export abstract class BaseForm {
         this.angularFireService = aService;
     }
 
-    public isFieldInvalid(formControlName: string, formGroup?: FormGroup): boolean {
+    public isFieldControlInvalid(formControlName: string, formGroup?: FormGroup): boolean {
         formGroup = formGroup || this.theForm;
+
+        console.log('formControlName: ', formControlName);
+        console.log('Is disabled: ', !formGroup.get(formControlName).disabled);
+        console.log('Is valid: ', !formGroup.get(formControlName).valid);
+        console.log('Is touched: ', formGroup.get(formControlName).touched);
+        console.log('Is dirty: ', formGroup.get(formControlName).pristine);
+
         return (
             !formGroup.get(formControlName).disabled &&
             !formGroup.get(formControlName).valid &&            
             formGroup.get(formControlName).touched
+        );
+    }
+
+    public isFieldArrayInvalid(formArray: string, formGroup?: FormGroup, index?: number): boolean {
+        formGroup = formGroup || this.theForm;
+        return (
+            !formGroup.get(formArray).value[index].disabled &&
+            !formGroup.get(formArray).value[index].valid &&
+            formGroup.get(formArray).value[index].touched
         );
     }
 
