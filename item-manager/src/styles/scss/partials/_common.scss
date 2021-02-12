@@ -1,6 +1,8 @@
+@import '../base/variables';
+
 .forms {
     padding: 10px;
-    background-color: pink;
+    background-color: $light-brown;
     mat-form-field.mat-form-field {
         display: block;
     }
@@ -30,7 +32,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: grey;
     padding: 10px;
     font-size: 14px;
 
@@ -42,10 +43,15 @@
         border: none;
         padding: 5px 10px;
         border-radius: 5px;
+        color: $primary-blue;
         // display: block;
         &:not(:last-child) {
             margin-right: 5px;
             //margin-bottom: 5px;
+        }
+
+        &:hover:disabled {
+            cursor: not-allowed;
         }
     }
 
@@ -59,7 +65,11 @@
 }
 
 .table {
-    background-color: red;
+    mat-table.mat-table {
+        color: $light-brown;
+    }
+
+    color: grey;
     mat-header-cell.mat-header-cell {
         justify-content: center;
     }

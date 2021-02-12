@@ -1,28 +1,32 @@
 <div *ngIf='formLoaded' class="container__wrapper">
     <div class="container container--centered">
         <div>
-            <h1 class="title">Log in</h1>
+            <h1 class="title">{{ 'Log in' }}</h1>
             <form [formGroup]="theForm" (ngSubmit)="onSubmit()" class="forms forms--width-500-px">
                 <mat-form-field appearance='outline'>
-                    <mat-label>Email:</mat-label>
+                    <mat-label>{{ 'Email' }}</mat-label>
                     <input
                         matInput
                         formControlName='email'
                         type='text'
                     >
 
-                    <mat-hint *ngIf="isFieldInvalid('email')">
-                        Field is invalid
+                    <mat-hint *ngIf="isFieldControlInvalid('email')">
+                        {{ 'Email field is invalid' }}
                     </mat-hint>
                 </mat-form-field>
 
                 <mat-form-field appearance='outline'>
-                    <mat-label>Password:</mat-label>
+                    <mat-label>{{ 'Password' }}</mat-label>
                     <input
                         matInput
                         formControlName='password'
                         type='password'
                     >
+
+                    <mat-hint *ngIf="isFieldControlInvalid('password')">
+                        {{ 'Password field is invalid' }}
+                    </mat-hint>
                 </mat-form-field>
 
                 <div class="buttons">
@@ -31,14 +35,14 @@
                         type='submit'
                         [disabled]='isSubmitDisabled()'
                     >
-                        Log in
+                        {{ 'Log in' }}
                     </button> 
                     <button
                         mat-raised-button
                         type='button'
                         (click)='onGoogleSubmit()'
                     >
-                        Log in with Google
+                        {{ 'Log in with Google' }}
                     </button>
                 </div>
                 <div class="buttons">
@@ -48,7 +52,7 @@
                         type='button'
                         (click)='redirectToRegistration()'
                     >
-                        Don't have an account? Register!
+                        {{ "Don't have an account? Register!" }}
                     </button>
                 </div>
             </form>

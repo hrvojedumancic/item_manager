@@ -1,5 +1,7 @@
+@import '../../../../../styles/scss/base/variables';
+
 .container__wrapper__navigation {
-    background-color: gold;
+    background-color: $light-brown;
 }
 
 .navigation {
@@ -9,7 +11,7 @@
     &__left-side, &__right-side {
         
         a {
-            color: black;
+            color: $primary-red;
             text-decoration: none;
             &:not(:last-child) {
                 margin-right: 5px;

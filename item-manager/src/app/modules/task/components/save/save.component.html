@@ -32,7 +32,7 @@
         <ng-container *ngIf="task.subtasks">
             <ng-container *ngFor="let subtask of task.subtasks; let i = index" formArrayName="subtasks">
                 <mat-form-field appearance="outline">
-                    <mat-label>Subtask name</mat-label>
+                    <mat-label>{{ 'Subtask name' }}</mat-label>
                     <input
                         matInput
                         type="text"
@@ -48,17 +48,17 @@
 
         <div class="buttons">
             <button
-            mat-raised-button
-            (click)="addNewSubtask()"
+                mat-raised-button
+                (click)="addNewSubtask()"
             >
-                Add new subtask
+                {{ 'Add new subtask' }}
             </button>
             <button
                 mat-raised-button
                 (click)="onSubmit()"
                 [disabled]='isSubmitDisabled()'
             >
-                Create new task
+                {{ 'Create new task' }}
             </button>
         </div>
     </form>
