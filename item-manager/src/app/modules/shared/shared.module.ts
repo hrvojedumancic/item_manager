@@ -8,17 +8,11 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { ReadButtonComponent } from './components/buttons/read-button/read-button.component';
-import { EditButtonComponent } from './components/buttons/edit-button/edit-button.component';
-import { DeleteButtonComponent } from './components/buttons/delete-button/delete-button.component';
 
 @NgModule({
   declarations: [
     NavigationComponent,
-    PageNotFoundComponent,
-    ReadButtonComponent,
-    EditButtonComponent,
-    DeleteButtonComponent
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -29,10 +23,7 @@ import { DeleteButtonComponent } from './components/buttons/delete-button/delete
     RouterModule
   ],
   exports: [
-    AngularMaterialModule,
-    ReadButtonComponent,
-    EditButtonComponent,
-    DeleteButtonComponent
+    AngularMaterialModule
   ]
 })
 export class SharedModule { }
