@@ -15,8 +15,10 @@ import { TaskModule } from '../../task.module';
 export class ListComponent implements OnInit {
   public formLoaded: boolean = false;
   public tasks: TaskModel[] = [];
+  public taskDetails: boolean[] = [];
   private userId: string;
   private readonly taskId: string = null;
+  public displayedColumns: string[] = ['name', 'actions'];
 
   constructor(private firestore: AngularFirestore,
     private afService: AngularFireService,
@@ -47,9 +49,12 @@ export class ListComponent implements OnInit {
   public getUserTaskCollection() {
     this.taskService.getTaskPath(this.userId).valueChanges().subscribe(
       (value: TaskModel[]) => {
-        console.log(value);
         this.tasks = value as TaskModel[];
         console.log(this.tasks);
+        this.taskDetails = [];
+        this.tasks.forEach(task => {
+          this.taskDetails.push(false);
+        });
         this.formLoaded = true;
       }
     );

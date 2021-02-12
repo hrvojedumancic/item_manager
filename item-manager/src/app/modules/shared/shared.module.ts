@@ -7,10 +7,19 @@ import { environment } from 'src/environments/environment';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ReadButtonComponent } from './components/buttons/read-button/read-button.component';
+import { EditButtonComponent } from './components/buttons/edit-button/edit-button.component';
+import { DeleteButtonComponent } from './components/buttons/delete-button/delete-button.component';
 
 @NgModule({
-  declarations: [NavigationComponent, PageNotFoundComponent],
+  declarations: [
+    NavigationComponent,
+    PageNotFoundComponent,
+    ReadButtonComponent,
+    EditButtonComponent,
+    DeleteButtonComponent
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,
@@ -20,7 +29,10 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
     RouterModule
   ],
   exports: [
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReadButtonComponent,
+    EditButtonComponent,
+    DeleteButtonComponent
   ]
 })
 export class SharedModule { }
