@@ -62,6 +62,9 @@ export class SaveComponent extends BaseForm implements OnInit {
         this.task.subtasks.map(data => new FormControl(data))
       )
     });
+    if (this.task !== null) {
+      this.theForm.addControl('completed', new FormControl(this.task.completed));
+    }
     this.formLoaded = true;
   }
 
@@ -83,31 +86,39 @@ export class SaveComponent extends BaseForm implements OnInit {
     )
   }
 
-  onSubmit() {
-    const formData = this.theForm.value;
+  public onSubmit() {
+    if (this.taskId === null) {
+      this.createTaskObject();
+    } else {
+      this.updateTaskObject();
+    }
+  }
 
-    console.log(this.theForm);
-    return;
+  private updateTaskObject() {
+    const formData = this.theForm.value;
+    this.taskService.updateTask(this.userId, this.taskId, formData).then(
+      (response: boolean) => {
+        this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
+        this.router.navigate(['/']);
+      },
+      (error: any) => {
+        this.messageService.displayMessage('Failed updating task', MessageOption.OK);
+      }
+    );
+  }
+
+  private createTaskObject() {
+    const formData = this.theForm.value;
     formData.created_at = (new Date().toISOString());
     formData.completed = false;
     this.taskService.getTaskPath(this.userId).add(formData).then(
       (response: any) => {
-        this.messageService.displayMessage('Success adding to firestore', MessageOption.SUCCESS);
+        this.messageService.displayMessage('Task created', MessageOption.SUCCESS);
         this.router.navigate(['/']);
       },
       (error: any) => {
-        this.messageService.displayMessage('Failed adding task to firestore', MessageOption.OK);
+        this.messageService.displayMessage('Failed creating task', MessageOption.OK);
       }
     )
-  }
-
-  protected apiRequest(formData: any): Observable<any> {
-    throw new Error('Method not implemented.');
-  }
-  protected handleSuccess(response: any): void {
-    throw new Error('Method not implemented.');
-  }
-  protected handleError(response: any): void {
-    throw new Error('Method not implemented.');
   }
 }

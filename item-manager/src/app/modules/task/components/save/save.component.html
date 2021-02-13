@@ -17,17 +17,26 @@
 
         <mat-form-field appearance="outline">
             <mat-label>{{ 'Description' }}</mat-label>
-            <input
+            <textarea
                 matInput
                 formControlName='description'
                 type='text'
                 placeholder='Task description'
             >
+            </textarea>
 
             <mat-hint *ngIf="isFieldControlInvalid('description')">
                 {{ 'Description required' }}
             </mat-hint>
         </mat-form-field>
+
+        <div *ngIf="task.id !== null" class="form__checkbox">
+            <span>{{ 'Completed' }}: </span>
+            <mat-checkbox
+                formControlName="completed"
+            >
+            </mat-checkbox>
+        </div>
 
         <ng-container *ngIf="task.subtasks">
             <ng-container *ngFor="let subtask of task.subtasks; let i = index" formArrayName="subtasks">
@@ -58,7 +67,7 @@
                 (click)="onSubmit()"
                 [disabled]='isSubmitDisabled()'
             >
-                {{ 'Create new task' }}
+                {{ task ? 'Update task' : 'Create new task' }}
             </button>
         </div>
     </form>

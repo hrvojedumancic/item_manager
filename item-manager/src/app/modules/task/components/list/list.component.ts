@@ -6,6 +6,7 @@ import { TaskModel } from '../../task.model';
 import { map } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
 import { TaskModule } from '../../task.module';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-list',
@@ -16,7 +17,7 @@ export class ListComponent implements OnInit {
   public formLoaded: boolean = false;
   public tasks: TaskModel[] = [];
   private userId: string;
-  private readonly taskId: string = null;
+  public readonly MAX_CHAR_LENGTH = 15;
   public displayedColumns: string[] = 
   [
     'name',
@@ -56,5 +57,20 @@ export class ListComponent implements OnInit {
         }
       }
     );
+  }
+
+  public updateTaskStatus(task: TaskModel, taskCompleted: boolean) {
+    const formData = {
+      completed: taskCompleted
+    };
+    this.taskService.updateTask(this.userId, task.id, formData).then(
+      (response: boolean) => {
+        const taskIndex = this.tasks.indexOf(task);
+        this.tasks[taskIndex].completed = taskCompleted;
+      },
+      (error: any) => {
+
+      }
+    )
   }
 }

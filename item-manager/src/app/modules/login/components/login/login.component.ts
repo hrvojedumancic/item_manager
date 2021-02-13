@@ -58,7 +58,7 @@ export class LoginComponent extends LoginForm implements OnInit {
     });
   }
 
-  onSubmit(): Promise<boolean> {
+  public onSubmit(): Promise<boolean> {
     return super.onSubmit().then(
       (response: boolean) => {
         if (response) {
@@ -69,20 +69,5 @@ export class LoginComponent extends LoginForm implements OnInit {
         return Promise.resolve(response);
       }
     );
-  }
-
-  protected apiRequest(formData: any): Observable<any> {
-    console.log('Api request form data: ', formData);
-    throw new Error('Method not implemented.');
-  }
-  protected handleSuccess(response: any): void {
-    throw new Error('Method not implemented.');
-  }
-  protected handleError(response: any): void {
-    throw new Error('Method not implemented.');
-  }
-
-  public redirectToRegistration() {
-    this.router.navigate(['registration']);
   }
 }

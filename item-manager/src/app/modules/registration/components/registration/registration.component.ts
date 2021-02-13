@@ -43,7 +43,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
     this.formLoaded = true;
   }
 
-  onSubmit(): Promise<boolean> {
+  public onSubmit(): Promise<boolean> {
     return new Promise((resolve) => {
       super.onSubmit().then(
         (response: boolean) => {
@@ -69,16 +69,6 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
         return Promise.resolve(response);
       }
     );
-  }
-
-  protected apiRequest(formData: any): Observable<any> {
-    throw new Error('Method not implemented.');
-  }
-  protected handleSuccess(response: any): void {
-    throw new Error('Method not implemented.');
-  }
-  protected handleError(response: any): void {
-    throw new Error('Method not implemented.');
   }
 
   public redirectToLogin() {

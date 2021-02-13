@@ -7,9 +7,7 @@ export abstract class BaseForm {
     public formLoaded: boolean = false;
     public theForm: FormGroup;
     protected angularFireService: AngularFireService;
-    protected abstract apiRequest(formData: any): Observable<any>;
-    protected abstract handleSuccess(response): void;
-    protected abstract handleError(response): void;
+    public abstract onSubmit(): void;
 
     constructor (private aService: AngularFireService) {
         this.angularFireService = aService;
@@ -47,13 +45,5 @@ export abstract class BaseForm {
 
     public isSubmitDisabled(): boolean {
         return this.theForm.invalid || this.theForm.disabled;
-    }
-
-    public onSubmit(): void {
-        const formData = this.theForm.value;
-        this.apiRequest(formData).subscribe({
-            next: (response) => this.handleSuccess(response),
-            error: (error) => this.handleError(error)
-        })
     }
 }

@@ -77,6 +77,25 @@ export class TaskService {
         })
     }
 
+    public updateTask(userId: string, taskId: string, formData: any): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.firestore.collection(Collections.USERS)
+            .doc(userId)
+            .collection(Collections.TASKS)
+            .doc(taskId)
+            .update(formData).then(
+                (response: any) => {
+                    this.messageService.displayMessage('Task status updated', MessageOption.SUCCESS);
+                    resolve(true);
+                },
+                (error: any) => {
+                    this.messageService.displayMessage('Unable to update task status', MessageOption.ERROR);
+                    reject;
+                }
+            )
+        })
+    }
+
     public getUserTaskCollection(userId: string): Promise<TaskModel[]> | null {
         return new Promise((resolve, reject) => {
             this.getTaskPath(userId).snapshotChanges().subscribe(
