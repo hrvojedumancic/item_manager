@@ -19,7 +19,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularMaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     RouterModule
   ],
   exports: [

@@ -16,10 +16,12 @@ export class AngularFireService {
 
   constructor(private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore, 
-    private messageService: MessageService) {
+    private messageService: MessageService
+    ) 
+  {
     this.signedIn = new Observable((subscriber) => {
       this.fireAuth.onAuthStateChanged(subscriber);
-  });
+    });
   }
 
   public signUp(email: string, password: string): Promise<boolean> {

@@ -9,13 +9,20 @@
     justify-content: space-between;
 
     &__left-side, &__right-side {
+
+        a:hover {
+            cursor: pointer;
+            color: $strong-red;
+        }
         
         a {
+            padding: 5px 10px;
             color: $primary-red;
             text-decoration: none;
             &:not(:last-child) {
-                margin-right: 5px;
+                margin-right: 15px;
             }
+
         }
     }
 }

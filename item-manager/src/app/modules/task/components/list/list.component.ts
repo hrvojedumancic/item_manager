@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore, DocumentData, DocumentSnapshot } from '@angular/fire/firestore';
 import { Collections } from '../../../shared/models/collections.model';
 import { AngularFireService } from '../../../shared/services/auth.service';
@@ -7,15 +7,21 @@ import { map } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
 import { TaskModule } from '../../task.module';
 import { stringify } from '@angular/compiler/src/util';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements AfterViewInit {
   public formLoaded: boolean = false;
   public tasks: TaskModel[] = [];
+  public dataSource: MatTableDataSource<TaskModel>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   private userId: string;
   public readonly MAX_CHAR_LENGTH = 15;
   public displayedColumns: string[] = 
@@ -31,7 +37,7 @@ export class ListComponent implements OnInit {
     private afService: AngularFireService,
     private taskService: TaskService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.afService.getUserId().then(
       (uid: string) => {
         this.userId = uid;
@@ -44,6 +50,9 @@ export class ListComponent implements OnInit {
     this.taskService.getUserTaskCollection(this.userId).then(
       (response: TaskModel[]) => {
         this.tasks = response;
+        this.dataSource = new MatTableDataSource(this.tasks);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.formLoaded = true;
       }
     )
@@ -54,6 +63,7 @@ export class ListComponent implements OnInit {
       (response: boolean) => {
         if (response) {
           this.tasks = this.tasks.filter(x => x.id !== taskId);
+          this.dataSource = new MatTableDataSource(this.tasks);
         }
       }
     );
@@ -67,10 +77,18 @@ export class ListComponent implements OnInit {
       (response: boolean) => {
         const taskIndex = this.tasks.indexOf(task);
         this.tasks[taskIndex].completed = taskCompleted;
+        this.dataSource = new MatTableDataSource(this.tasks);
       },
       (error: any) => {
 
       }
     )
+  }
+
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

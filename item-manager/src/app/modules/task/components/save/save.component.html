@@ -67,7 +67,7 @@
                 (click)="onSubmit()"
                 [disabled]='isSubmitDisabled()'
             >
-                {{ task ? 'Update task' : 'Create new task' }}
+                {{ task.id ? 'Update task' : 'Create new task' }}
             </button>
         </div>
     </form>

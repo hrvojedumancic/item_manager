@@ -6,7 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
     imports: [
@@ -17,7 +19,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSnackBarModule,
         MatIconModule,
         MatTableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatSortModule
     ],
     exports: [
         ReactiveFormsModule,
@@ -27,7 +31,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSnackBarModule,
         MatIconModule,
         MatTableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatSortModule
     ]
 })
 export class AngularMaterialModule {}

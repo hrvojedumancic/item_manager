@@ -1,29 +1,46 @@
-<div *ngIf="formLoaded">
-    <ng-container *ngIf="tasks.length > 0; else empty">
-        <mat-table [dataSource]="tasks" class="table">
+<div [hidden]="!formLoaded">
+    <div [hidden]="tasks.length === 0">
+
+        <div class="table-actions">
+            <mat-form-field>
+                <mat-label>{{ 'Filter' }}</mat-label>
+                <input
+                    matInput
+                    (keyup)="applyFilter($event.target.value)"
+                    placeholder="{{ 'Search' }}" #input>
+            </mat-form-field>
+            <div class="buttons">
+                <button
+                    routerLink='/new'>
+                    {{ 'New task' }}
+                </button>
+            </div>
+        </div>
+
+        <mat-table [dataSource]="dataSource" matSort class="table">
             <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>{{ 'Name' }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Name' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
             </ng-container>
-
+    
             <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef>{{ 'Description' }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Description' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">
                     {{ task.description.length <= MAX_CHAR_LENGTH
                         ? task.description : task.description.substring(0, MAX_CHAR_LENGTH) + '...' }}
                 </mat-cell>
             </ng-container>
-
+    
             <ng-container matColumnDef="created_at">
-                <mat-header-cell *matHeaderCellDef>{{ 'Created at' }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Created at' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">{{ task.created_at | date:'hh:mm dd-MM-yy' }}</mat-cell>
             </ng-container>
-
+    
             <ng-container matColumnDef="completed">
                 <mat-header-cell *matHeaderCellDef>{{ 'Completed' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">{{ task.completed }}</mat-cell>
             </ng-container>
-
+    
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef>{{ 'Actions' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">
@@ -37,12 +54,14 @@
                     <app-delete-button (click)='deleteTask(task.id)'></app-delete-button>
                 </mat-cell>
             </ng-container>
-
+    
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
-    </ng-container>
-    <ng-template #empty>
+    
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="paginator"></mat-paginator>
+    </div>
+    <div [hidden]="tasks.length !== 0">
         {{ 'There are no tasks in the list' }}
-    </ng-template>
+    </div>
 </div>
