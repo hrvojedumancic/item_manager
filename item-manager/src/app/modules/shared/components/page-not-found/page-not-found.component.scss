@@ -1,0 +1,20 @@
+@import '../../../../../styles/scss/base/variables';
+
+
+.container--width-500-px {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background-color: $light-brown;
+    border-radius: 5px;
+    color: $primary-red;
+
+    h1, h2 {
+        text-align: center;
+    }
+
+    &__inner {
+        display: block;
+    }
+}

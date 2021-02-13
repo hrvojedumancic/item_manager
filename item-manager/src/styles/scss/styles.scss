@@ -36,4 +36,8 @@ body {
     &__main {
         background-color: $primary-pale;
     }
+
+    &--width-500-px {
+        width: 500px;
+    }
 }

@@ -22,7 +22,12 @@ const routes: Routes = [
     loadChildren: () => import('./modules/registration/registration.module').
       then(m => m.RegistrationModule)
   },
-  { path: '**', component: PageNotFoundComponent, pathMatch: 'full' }
+  { 
+    path: '**',
+    canActivate: [AuthGuard],
+    component: PageNotFoundComponent,
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
