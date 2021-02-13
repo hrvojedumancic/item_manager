@@ -32,11 +32,11 @@ export class LoginComponent extends LoginForm implements OnInit {
   public initializeLoginForm() {
     this.theForm = new FormGroup({
       email: new FormControl(
-        'admin@admin.test',
+        '',
         [Validators.required]
       ),
       password: new FormControl(
-        'abc123',
+        '',
         [Validators.required]
       )
     });
@@ -69,5 +69,9 @@ export class LoginComponent extends LoginForm implements OnInit {
         return Promise.resolve(response);
       }
     );
+  }
+
+  public redirectToRegistration() {
+    this.router.navigate(['/registration']);
   }
 }

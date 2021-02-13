@@ -1,35 +1,36 @@
-<div class="container__wrapper container__wrapper__navigation">
-    <div class="container">
-        <div class="navigation">
-            <div class="navigation__left-side">
+<div class="container__wrapper">
+    <div class="container__wrapper__navigation">
+        <div class="container">
+            <div class="navigation">
+                <div class="navigation__left-side">
 
-                <a  routerLink='/'
-                    class="plain-text plain-text--hover"
-                    >
-                    To-Do App
-                </a>
+                    <a  routerLink='/'
+                        >
+                        To-Do App
+                    </a>
 
-                <a
-                    routerLink='/'>
-                    Task list
-                </a>
+                    <a
+                        routerLink='/'>
+                        Task list
+                    </a>
 
-                <a
-                    routerLink='/new'>
-                    New task
-                </a>
-            </div>
-            <div class="navigation__right-side">
-                <a
-                    (click)="signOut()">
-                    Sign out
-                </a>
+                    <a
+                        routerLink='/new'>
+                        New task
+                    </a>
+                </div>
+                <div class="navigation__right-side">
+                    <a
+                        (click)="signOut()">
+                        Sign out
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container__wrapper">
-    <div class="container container__main">
-        <router-outlet></router-outlet>
+    <div class="container__wrapper__main">
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

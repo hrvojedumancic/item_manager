@@ -1,5 +1,5 @@
 <div *ngIf="formLoaded">
-    <form [formGroup]="theForm" class="form">
+    <form [formGroup]="theForm" class="forms">
 
         <mat-form-field appearance="outline">
             <mat-label>{{ 'Name' }}</mat-label>
@@ -30,7 +30,7 @@
             </mat-hint>
         </mat-form-field>
 
-        <div *ngIf="task.id !== null" class="form__checkbox">
+        <div *ngIf="task.id !== null" class="forms__checkbox">
             <span>{{ 'Completed' }}: </span>
             <mat-checkbox
                 formControlName="completed"
@@ -67,7 +67,7 @@
                 (click)="onSubmit()"
                 [disabled]='isSubmitDisabled()'
             >
-                {{ task.id ? 'Update task' : 'Create new task' }}
+                {{ taskId ? 'Update task' : 'Create new task' }}
             </button>
         </div>
     </form>

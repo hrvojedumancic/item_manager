@@ -1,6 +1,7 @@
 @import '../base/variables';
 
 .forms {
+    display: grid;
     padding: 10px;
     background-color: $light-brown;
     mat-form-field.mat-form-field {
@@ -10,22 +11,19 @@
     &--width-500-px {
         width: 500px;
     }
+
+    &--border-radius {
+        border-radius: 5px;
+    }
+
+    &__checkbox {
+        padding-bottom: 15px;
+    }
 }
 
 .title {
     text-align: center;
-}
-
-.plain-text {
-    background-color: transparent;
-    border: none;
-    text-decoration: none;
-
-    &--hover {
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+    color: $primary-red;
 }
 
 .buttons {
@@ -40,15 +38,12 @@
     }
 
     button {
-        border: none;
         padding: 5px 10px;
-        border-radius: 5px;
         color: $primary-red;
         border: 1px solid $primary-red;
-        // display: block;
+        border-radius: 5px;
         &:not(:last-child) {
             margin-right: 5px;
-            //margin-bottom: 5px;
         }
 
         &:hover:disabled {
@@ -56,16 +51,22 @@
         }
     }
 
+    &--no-border {
+        button {
+            background-color: transparent;
+            border: none;
+            text-decoration: none;
+
+            &--hover {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
     &--big {
         font-size: 20px;
-    }
-}
-
-.form {
-    display: grid;
-
-    &__checkbox {
-        padding-bottom: 15px;
     }
 }
 
@@ -90,7 +91,6 @@
 }
 
 .paginator {
-
     .mat-paginator-outer-container {
         background-color: $primary-pale;
     }

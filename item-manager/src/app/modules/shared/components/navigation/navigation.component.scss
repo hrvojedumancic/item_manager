@@ -1,7 +1,14 @@
 @import '../../../../../styles/scss/base/variables';
 
 .container__wrapper__navigation {
+    display: flex;
+    justify-content: center;
     background-color: $light-brown;
+}
+
+.container__wrapper__main {
+    display: flex;
+    justify-content: center;
 }
 
 .navigation {
@@ -16,7 +23,6 @@
         }
         
         a {
-            padding: 5px 10px;
             color: $primary-red;
             text-decoration: none;
             &:not(:last-child) {

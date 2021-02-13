@@ -1,8 +1,8 @@
 <div *ngIf='formLoaded' class="container__wrapper">
-    <div class="container container--centered">
+    <div class="container--centered">
         <div>
             <h1 class="title">{{ 'Register' }}</h1>
-            <form [formGroup]="theForm" (ngSubmit)="onSubmit()" class="forms forms--width-500-px">
+            <form [formGroup]="theForm" (ngSubmit)="onSubmit()" class="forms forms--width-500-px forms--border-radius">
                 <mat-form-field appearance='outline'>
                     <mat-label>{{ 'Email' }}</mat-label>
                     <input
@@ -21,7 +21,7 @@
                     <input
                         matInput
                         formControlName='password'
-                        type='text'
+                        type='password'
                     >
 
                     <mat-hint *ngIf="isFieldControlInvalid('password')">
@@ -45,14 +45,13 @@
                     {{ 'Register with Google' }}
                     </button>
                 </div>
-                <div class="buttons">
+                <div class="buttons buttons--no-border">
                     <button
-                        class="plain-text plain-text--hover"
                         mat-raised-button
                         type='button'
                         (click)='redirectToLogin()'
                     >
-                    {{ 'Log in' }}
+                    {{ 'Return to log in' }}
                     </button>
                 </div>
             </form>

@@ -78,6 +78,7 @@ export class SaveComponent extends BaseForm implements OnInit {
     this.taskService.getTaskObject(this.userId, this.taskId).then(
       (response: TaskModel) => {
         this.task = response;
+        this.task.id = this.taskId;
         this.initializeForm();
       },
       (error: any) => {

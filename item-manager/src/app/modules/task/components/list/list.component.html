@@ -26,7 +26,7 @@
             <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Description' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">
-                    {{ task.description.length <= MAX_CHAR_LENGTH
+                    {{ task.description?.length <= MAX_CHAR_LENGTH
                         ? task.description : task.description.substring(0, MAX_CHAR_LENGTH) + '...' }}
                 </mat-cell>
             </ng-container>
