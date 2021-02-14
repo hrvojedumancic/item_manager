@@ -50,9 +50,7 @@ export class ListComponent implements AfterViewInit {
     this.taskService.getUserTaskCollection(this.userId).then(
       (response: TaskModel[]) => {
         this.tasks = response;
-        this.dataSource = new MatTableDataSource(this.tasks);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.bindData();
         this.formLoaded = true;
       }
     )
@@ -63,7 +61,7 @@ export class ListComponent implements AfterViewInit {
       (response: boolean) => {
         if (response) {
           this.tasks = this.tasks.filter(x => x.id !== taskId);
-          this.dataSource = new MatTableDataSource(this.tasks);
+          this.bindData();
         }
       }
     );
@@ -77,7 +75,7 @@ export class ListComponent implements AfterViewInit {
       (response: boolean) => {
         const taskIndex = this.tasks.indexOf(task);
         this.tasks[taskIndex].completed = taskCompleted;
-        this.dataSource = new MatTableDataSource(this.tasks);
+        this.bindData();
       },
       (error: any) => {
 
@@ -90,5 +88,11 @@ export class ListComponent implements AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  private bindData() {
+    this.dataSource = new MatTableDataSource(this.tasks);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }
