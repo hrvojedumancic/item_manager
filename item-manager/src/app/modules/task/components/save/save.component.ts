@@ -57,21 +57,12 @@ export class SaveComponent extends BaseForm implements OnInit {
           [
             Validators.required
           ]
-      ),
-      subtasks: new FormArray(
-        this.task.subtasks.map(data => new FormControl(data))
       )
     });
     if (this.task !== null) {
       this.theForm.addControl('completed', new FormControl(this.task.completed));
     }
     this.formLoaded = true;
-  }
-
-  public addNewSubtask() {
-    const subtasks = this.theForm.get('subtasks') as FormArray;
-    subtasks.push(new FormControl('', [Validators.required]));
-    this.task.subtasks.push('');
   }
 
   public getTaskObject() {

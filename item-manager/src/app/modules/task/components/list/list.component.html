@@ -37,7 +37,7 @@
             </ng-container>
     
             <ng-container matColumnDef="completed">
-                <mat-header-cell *matHeaderCellDef>{{ 'Completed' }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Completed' }}</mat-header-cell>
                 <mat-cell *matCellDef="let task">{{ task.completed }}</mat-cell>
             </ng-container>
     

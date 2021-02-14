@@ -20,8 +20,7 @@ export class TaskService {
             description: null,
             id: null,
             completed: false,
-            name: null,
-            subtasks: []
+            name: null
         }
         return task;
     }
