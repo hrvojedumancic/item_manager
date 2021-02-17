@@ -1,19 +1,22 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireService } from '../../../shared/services/auth.service';
 import { TaskModel } from '../../task.model';
 import { TaskService } from '../../services/task.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { DocumentData } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements AfterViewInit {
+export class ListComponent implements AfterViewInit, OnDestroy {
   public formLoaded: boolean = false;
   public tasks: TaskModel[] = [];
+  private taskSubscription: Subscription;
   public dataSource: MatTableDataSource<TaskModel>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,10 +43,20 @@ export class ListComponent implements AfterViewInit {
     )
   }
 
+  ngOnDestroy() {
+    this.taskSubscription.unsubscribe();
+  }
+
   public getUserTaskCollection() {
-    this.taskService.getUserTaskCollection(this.userId).then(
-      (response: TaskModel[]) => {
-        this.tasks = response;
+    this.taskSubscription = this.taskService.getTaskPath(this.userId).snapshotChanges().subscribe(
+      (response: DocumentData[]) => {
+        this.tasks = [];
+        response.forEach(element => {
+          let document = element.payload.doc;
+          let task = document.data() as TaskModel;
+          task.id = document.id;
+          this.tasks.push(task);
+        });
         this.bindData();
         this.formLoaded = true;
       }

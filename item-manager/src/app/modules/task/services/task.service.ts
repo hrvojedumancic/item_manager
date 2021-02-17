@@ -94,25 +94,4 @@ export class TaskService {
         })
     }
 
-    public getUserTaskCollection(userId: string): Promise<TaskModel[]> | null {
-        return new Promise((resolve, reject) => {
-            this.getTaskPath(userId).snapshotChanges().subscribe(
-                (value: DocumentData[]) => {
-                  const tasks: TaskModel[] = [];
-                  value.forEach(element => {
-                    let document = element.payload.doc;
-                    let task = document.data() as TaskModel;
-                    task.id = document.id;
-                    tasks.push(task);
-                  });
-                  resolve(tasks);
-                },
-                (error: any) => {
-                    this.messageService.displayMessage('Unable to fetch tasks', MessageOption.OK);
-                    reject(null);
-                }
-              );
-        })
-    }
-
 }
