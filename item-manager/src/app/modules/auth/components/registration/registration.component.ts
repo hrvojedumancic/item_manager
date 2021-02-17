@@ -50,7 +50,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
         if (response) {
           this.router.navigate(['/']).then();
         } else {
-          console.log('Registration with google is unssucessful');
+          console.log('Registration with google is unsuccessful');
         }
         return Promise.resolve(response);
       }
