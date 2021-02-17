@@ -18,15 +18,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afService.isUserLoggedIn().then(
-      value => {
-        if (value) {
-          this.router.navigate(['/']);
-        } else {
-          this.initializeRegistrationForm();
-        }
-      }
-    )
+    this.initializeRegistrationForm();
   }
 
   public initializeRegistrationForm() {

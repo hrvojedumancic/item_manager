@@ -19,15 +19,7 @@ export class LoginComponent extends LoginForm implements OnInit {
   }
   
   ngOnInit(): void {
-    this.afService.isUserLoggedIn().then(
-      value => {
-        if (value) {
-          this.router.navigate(['/']);
-        } else {
-          this.initializeLoginForm();    
-        }
-      }
-    )
+    this.initializeLoginForm();
   }
 
   public initializeLoginForm() {
