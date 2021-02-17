@@ -108,9 +108,6 @@ export class TaskService {
                   resolve(tasks);
                 },
                 (error: any) => {
-                    if (isDevMode) {
-                        console.log('Error while trying to fetch user task collection: ', error);
-                    }
                     this.messageService.displayMessage('Unable to fetch tasks', MessageOption.OK);
                     reject(null);
                 }
