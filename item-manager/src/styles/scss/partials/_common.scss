@@ -2,7 +2,8 @@
     display: grid;
     padding: 10px;
     background-color: var(--light-brown);
-    mat-form-field.mat-form-field {
+    
+    .mat-form-field {
         display: block;
     }
 
@@ -69,21 +70,21 @@
 }
 
 .table {
-    mat-row.mat-row, 
-    mat-header-cell.mat-header-cell,
-    mat-header-row.mat-header-row,
-    mat-cell.mat-cell
+    .mat-row, 
+    .mat-header-cell,
+    .mat-header-row,
+    .mat-cell
     {
         background-color: var(--primary-pale);
     }
 
-    mat-header-cell.mat-header-cell,
-    mat-header-row.mat-header-row {
+    .mat-header-cell,
+    .mat-header-row {
         background-color: var(--light-brown);
     }
 
-    mat-header-cell.mat-header-cell,
-    mat-cell.mat-cell {
+    .mat-header-cell,
+    .mat-cell {
         justify-content: center;
     }
 }
