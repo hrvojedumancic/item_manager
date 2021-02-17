@@ -49,9 +49,9 @@
                         [checked]="task.completed"
                         (click)="updateTaskStatus(task, $event.target.checked)"
                     >
-                    <app-read-button routerLink='/read/{{task.id}}'></app-read-button>
-                    <app-edit-button routerLink='/edit/{{task.id}}'></app-edit-button>
-                    <app-delete-button (click)='deleteTask(task.id)'></app-delete-button>
+                    <app-shared-button [icon]="'visibility'" routerLink='/read/{{task.id}}'></app-shared-button>
+                    <app-shared-button [icon]="'edit'" routerLink='/edit/{{task.id}}'></app-shared-button>
+                    <app-shared-button [icon]="'delete'"  (click)='deleteTask(task.id)'></app-shared-button>
                 </mat-cell>
             </ng-container>
     

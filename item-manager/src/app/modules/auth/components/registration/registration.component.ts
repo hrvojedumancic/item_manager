@@ -1,39 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
-import { LoginForm } from '../../services/login-form.component';
+import { RegistrationForm } from '../../services/registration-form.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
 })
-export class LoginComponent extends LoginForm implements OnInit {
+export class RegistrationComponent extends RegistrationForm implements OnInit {
 
   constructor(private afService: AngularFireService,
     private router: Router) {
     super(afService);
   }
-  
+
   ngOnInit(): void {
     this.afService.isUserLoggedIn().then(
       value => {
         if (value) {
           this.router.navigate(['/']);
         } else {
-          this.initializeLoginForm();    
+          this.initializeRegistrationForm();
         }
       }
     )
   }
 
-  public initializeLoginForm() {
+  public initializeRegistrationForm() {
     this.theForm = new FormGroup({
       email: new FormControl(
         '',
-        [Validators.required]
+        [Validators.required, Validators.email]
       ),
       password: new FormControl(
         '',
@@ -43,35 +42,36 @@ export class LoginComponent extends LoginForm implements OnInit {
     this.formLoaded = true;
   }
 
-  public onGoogleSubmit(): Promise<boolean> {
+  public onSubmit(): Promise<boolean> {
     return new Promise((resolve) => {
-      super.onGoogleSubmit().then(
+      super.onSubmit().then(
         (response: boolean) => {
           if (response) {
             this.router.navigate(['/']).then();
           } else {
-            console.log('Login is unssucessful');
+            console.log('Registration not a success');
           }
           return resolve(response);
-        }
-      );
-    });
+        });
+    }
+    )
   }
 
-  public onSubmit(): Promise<boolean> {
-    return super.onSubmit().then(
+  public onGoogleSubmit(): Promise<boolean> {
+    return super.onGoogleSubmit().then(
       (response: boolean) => {
         if (response) {
           this.router.navigate(['/']).then();
         } else {
-          console.log('Login is unssucessful');
+          console.log('Registration with google is unssucessful');
         }
         return Promise.resolve(response);
       }
     );
   }
 
-  public redirectToRegistration() {
-    this.router.navigate(['/registration']);
+  public redirectToLogin() {
+    this.router.navigate(['']);
   }
+
 }

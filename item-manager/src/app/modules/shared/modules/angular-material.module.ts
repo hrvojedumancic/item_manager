@@ -9,6 +9,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -21,7 +23,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatTableModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule
     ],
     exports: [
         ReactiveFormsModule,
@@ -33,7 +38,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatTableModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule
     ]
 })
 export class AngularMaterialModule {}

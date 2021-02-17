@@ -1,4 +1,3 @@
-import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { BaseForm } from '../../shared/components/base-form/base-form.component';
 
 export abstract class LoginForm extends BaseForm {

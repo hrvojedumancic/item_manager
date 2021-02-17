@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../shared/modules/angular-material.module';
+import { LoginComponent } from '../auth/components/login/login.component';
+import { AuthRoutingModule } from './auth-routing.module';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { RegistrationRoutingModule } from './registration-routing.module';
 
 @NgModule({
     declarations: [
+        LoginComponent,
         RegistrationComponent
     ],
     imports: [
         CommonModule,
-        RegistrationRoutingModule,
+        AuthRoutingModule,
         AngularMaterialModule
     ]
 })
-export class RegistrationModule {}
+export class AuthModule {}

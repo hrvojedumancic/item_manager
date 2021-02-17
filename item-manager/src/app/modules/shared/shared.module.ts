@@ -8,11 +8,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
     NavigationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ButtonComponent
   ],
   imports: [
     CommonModule,
@@ -20,10 +22,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
-    RouterModule
+    RouterModule,
   ],
   exports: [
-    AngularMaterialModule
+    AngularMaterialModule,
+    ButtonComponent
   ]
 })
 export class SharedModule { }

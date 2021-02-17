@@ -15,14 +15,6 @@ export abstract class BaseForm {
 
     public isFieldControlInvalid(formControlName: string, formGroup?: FormGroup): boolean {
         formGroup = formGroup || this.theForm;
-
-        console.log('formControlName: ', formControlName);
-        console.log('Is disabled: ', !formGroup.get(formControlName).disabled);
-        console.log('Is valid: ', !formGroup.get(formControlName).valid);
-        console.log('Is invalid: ', formGroup.get(formControlName).invalid);
-        console.log('Is touched: ', formGroup.get(formControlName).touched);
-        console.log('Is dirty: ', formGroup.get(formControlName).pristine);
-
         return (
             !formGroup.get(formControlName).disabled &&
             !formGroup.get(formControlName).valid &&            

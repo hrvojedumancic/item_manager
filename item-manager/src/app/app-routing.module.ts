@@ -13,14 +13,9 @@ const routes: Routes = [
       then(m => m.TaskModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./modules/login/login.module').
-      then(m => m.LoginModule)
-  },
-  {
-    path: 'registration',
-    loadChildren: () => import('./modules/registration/registration.module').
-      then(m => m.RegistrationModule)
+    path: '',
+    loadChildren: () => import('./modules/auth/auth.module').
+      then(m => m.AuthModule)
   },
   { 
     path: '**',
