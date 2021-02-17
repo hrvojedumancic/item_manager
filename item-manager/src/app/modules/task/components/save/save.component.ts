@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseForm } from 'src/app/modules/shared/services/base-form/base-form.service';
 import { MessageOption } from 'src/app/modules/shared/models/messages.model';
@@ -23,7 +23,8 @@ export class SaveComponent extends BaseForm implements OnInit {
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private taskService: TaskService,
-    private router: Router)
+    private router: Router,
+    private formBuilder: FormBuilder)
     {
       super(afService);
       this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -44,7 +45,7 @@ export class SaveComponent extends BaseForm implements OnInit {
   }
 
   private initializeForm() {
-    this.theForm = new FormGroup({
+    this.theForm = this.formBuilder.group({
       name: new FormControl(
           this.task.name,
           [

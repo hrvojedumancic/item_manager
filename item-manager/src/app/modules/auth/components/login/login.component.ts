@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
@@ -13,7 +13,8 @@ import { LoginForm } from '../../services/login-form.service';
 export class LoginComponent extends LoginForm implements OnInit {
 
   constructor(private afService: AngularFireService,
-    private router: Router) {
+    private router: Router,
+    private formBuilder: FormBuilder) {
     super(afService);
   }
   
@@ -30,7 +31,7 @@ export class LoginComponent extends LoginForm implements OnInit {
   }
 
   public initializeLoginForm() {
-    this.theForm = new FormGroup({
+    this.theForm = this.formBuilder.group({
       email: new FormControl(
         '',
         [Validators.required]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
 import { RegistrationForm } from '../../services/registration-form.service';
@@ -12,7 +12,8 @@ import { RegistrationForm } from '../../services/registration-form.service';
 export class RegistrationComponent extends RegistrationForm implements OnInit {
 
   constructor(private afService: AngularFireService,
-    private router: Router) {
+    private router: Router,
+    private formBuilder: FormBuilder) {
     super(afService);
   }
 
@@ -29,7 +30,7 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
   }
 
   public initializeRegistrationForm() {
-    this.theForm = new FormGroup({
+    this.theForm = this.formBuilder.group({
       email: new FormControl(
         '',
         [Validators.required, Validators.email]
