@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { BaseForm } from 'src/app/modules/shared/components/base-form/base-form.component';
+import { BaseForm } from 'src/app/modules/shared/services/base-form/base-form.service';
 import { MessageOption } from 'src/app/modules/shared/models/messages.model';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
 import { MessageService } from 'src/app/modules/shared/services/message.service';

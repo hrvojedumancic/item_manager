@@ -1,6 +1,5 @@
-import { EmailValidator, FormArray, FormControl, FormGroup } from "@angular/forms";
-import { Observable } from "rxjs";
-import { AngularFireService } from "../../services/auth.service";
+import { FormGroup } from "@angular/forms";
+import { AngularFireService } from "../auth.service";
 
 export abstract class BaseForm {
 

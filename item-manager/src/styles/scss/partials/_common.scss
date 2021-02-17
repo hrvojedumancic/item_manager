@@ -1,9 +1,7 @@
-@import '../base/variables';
-
 .forms {
     display: grid;
     padding: 10px;
-    background-color: $light-brown;
+    background-color: var(--light-brown);
     mat-form-field.mat-form-field {
         display: block;
     }
@@ -23,7 +21,7 @@
 
 .title {
     text-align: center;
-    color: $primary-red;
+    color: var(--primary-red);
 }
 
 .buttons {
@@ -39,8 +37,8 @@
 
     button {
         padding: 5px 10px;
-        color: $primary-red;
-        border: 1px solid $primary-red;
+        color: var(--primary-red);
+        border: 1px solid var(--primary-red);
         border-radius: 5px;
         &:not(:last-child) {
             margin-right: 5px;
@@ -76,12 +74,12 @@
     mat-header-row.mat-header-row,
     mat-cell.mat-cell
     {
-        background-color: $primary-pale;
+        background-color: var(--primary-pale);
     }
 
     mat-header-cell.mat-header-cell,
     mat-header-row.mat-header-row {
-        background-color: $light-brown;
+        background-color: var(--light-brown);
     }
 
     mat-header-cell.mat-header-cell,
@@ -92,6 +90,6 @@
 
 .paginator {
     .mat-paginator-outer-container {
-        background-color: $primary-pale;
+        background-color: var(--primary-pale);
     }
 }

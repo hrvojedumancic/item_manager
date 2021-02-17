@@ -1,4 +1,4 @@
-import { BaseForm } from '../../shared/components/base-form/base-form.component';
+import { BaseForm } from '../../shared/services/base-form/base-form.service';
 
 export abstract class LoginForm extends BaseForm {
 

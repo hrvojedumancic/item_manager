@@ -32,6 +32,8 @@
             ],
             "styles": [
               "src/styles/scss/styles.scss",
+              "src/styles/scss/base/_variables.scss",
+              "src/styles/scss/partials/_common.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": []
