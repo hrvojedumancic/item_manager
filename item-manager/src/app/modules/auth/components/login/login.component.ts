@@ -36,8 +36,6 @@ export class LoginComponent extends LoginForm implements OnInit {
         (response: boolean) => {
           if (response) {
             this.router.navigate(['/']).then();
-          } else {
-            console.log('Login is unsuccessful');
           }
           return resolve(response);
         }
@@ -50,8 +48,6 @@ export class LoginComponent extends LoginForm implements OnInit {
       (response: boolean) => {
         if (response) {
           this.router.navigate(['/']).then();
-        } else {
-          console.log('Login is unsuccessful');
         }
         return Promise.resolve(response);
       }

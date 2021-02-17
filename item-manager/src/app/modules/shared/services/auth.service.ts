@@ -23,10 +23,6 @@ export class AngularFireService {
     return new Promise((resolve, reject) => {
       this.fireAuth.createUserWithEmailAndPassword(email, password).then(
         response => {
-          this.firestore.collection(Collections.USERS).doc(response.user.uid).set({
-            testDoc: 'TestDocValue'
-          });
-          console.log('Log in response value: ', response);
           this.messageService.displayMessage('Registration successful');
           return resolve(true);
         },

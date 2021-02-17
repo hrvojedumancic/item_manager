@@ -7,7 +7,7 @@ export abstract class RegistrationForm extends BaseForm {
         return this.angularFireService.signUp(formData.email, formData.password);
     }
 
-    public onGoogleSubmit() {
+    public onGoogleSubmit(): Promise<boolean> {
         return this.angularFireService.googleSignIn();
     }
 }

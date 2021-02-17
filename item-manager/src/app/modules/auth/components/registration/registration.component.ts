@@ -35,8 +35,6 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
         (response: boolean) => {
           if (response) {
             this.router.navigate(['/']).then();
-          } else {
-            console.log('Registration not a success');
           }
           return resolve(response);
         });
@@ -49,8 +47,6 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
       (response: boolean) => {
         if (response) {
           this.router.navigate(['/']).then();
-        } else {
-          console.log('Registration with google is unsuccessful');
         }
         return Promise.resolve(response);
       }

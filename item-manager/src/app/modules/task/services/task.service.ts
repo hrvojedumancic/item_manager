@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
 import { rejects } from 'assert';
 import { Collections } from '../../shared/models/collections.model';
@@ -109,7 +109,9 @@ export class TaskService {
                   resolve(tasks);
                 },
                 (error: any) => {
-                    console.log('Error while trying to fetch user task collection: ', error);
+                    if (isDevMode) {
+                        console.log('Error while trying to fetch user task collection: ', error);
+                    }
                     this.messageService.displayMessage('Unable to fetch tasks', MessageOption.OK);
                     reject(null);
                 }
