@@ -1,12 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { AngularFirestore, DocumentData, DocumentSnapshot } from '@angular/fire/firestore';
-import { Collections } from '../../../shared/models/collections.model';
 import { AngularFireService } from '../../../shared/services/auth.service';
 import { TaskModel } from '../../task.model';
-import { map } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
-import { TaskModule } from '../../task.module';
-import { stringify } from '@angular/compiler/src/util';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -33,8 +28,7 @@ export class ListComponent implements AfterViewInit {
     'actions'
   ];
 
-  constructor(private firestore: AngularFirestore,
-    private afService: AngularFireService,
+  constructor(private afService: AngularFireService,
     private taskService: TaskService) { }
 
   ngAfterViewInit(): void {
@@ -76,9 +70,6 @@ export class ListComponent implements AfterViewInit {
         const taskIndex = this.tasks.indexOf(task);
         this.tasks[taskIndex].completed = taskCompleted;
         this.bindData();
-      },
-      (error: any) => {
-
       }
     )
   }

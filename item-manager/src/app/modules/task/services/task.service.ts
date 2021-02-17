@@ -1,6 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
-import { rejects } from 'assert';
 import { Collections } from '../../shared/models/collections.model';
 import { MessageOption } from '../../shared/models/messages.model';
 import { MessageService } from '../../shared/services/message.service';
