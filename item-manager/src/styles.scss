@@ -34,9 +34,6 @@ $item-manager-theme: mat-light-theme((
 @include angular-material-theme($item-manager-theme);
 
 /* You can add global styles to this file, and also import other style files */
-@import 'styles/scss/styles.scss';
-@import 'styles/scss/base/variables';
-@import 'styles/scss/partials/common';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,17 +1,10 @@
-.container--width-500-px {
+.container__wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
-    background-color: var(--light-brown);
-    border-radius: 5px;
-    color: --primary-red;
-
-    h1, h2 {
-        text-align: center;
-    }
 
     &__inner {
         display: block;
+        text-align: center;
     }
 }

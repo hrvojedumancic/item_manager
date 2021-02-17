@@ -1,17 +1,13 @@
 <div class="container__wrapper">
-    <div class="container--centered">
-        <div class="container--width-500-px">
-            <div class="container--width-500-px__inner">
-                <h1>{{ '404 ERROR' }} </h1>
-                <h2>{{ 'Page not found' }}</h2>
-                <div class="buttons">
-                    <button
-                        routerLink='/'
-                    >
-                        {{  isUserLoggedIn ? 'Task list' : 'Log in' }}
-                    </button>
-                </div>
+        <div class="container__wrapper__inner">
+            <h1>{{ '404 ERROR' }} </h1>
+            <h2>{{ 'Page not found' }}</h2>
+            <div class="buttons">
+                <button
+                    routerLink='/'
+                >
+                    {{  isUserLoggedIn ? 'Task list' : 'Log in' }}
+                </button>
             </div>
         </div>
-    </div>
 </div>
