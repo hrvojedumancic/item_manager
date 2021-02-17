@@ -32,14 +32,8 @@ export class LoginComponent extends LoginForm implements OnInit {
 
   public initializeLoginForm() {
     this.theForm = this.formBuilder.group({
-      email: new FormControl(
-        '',
-        [Validators.required]
-      ),
-      password: new FormControl(
-        '',
-        [Validators.required]
-      )
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
     this.formLoaded = true;
   }

@@ -31,14 +31,8 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
 
   public initializeRegistrationForm() {
     this.theForm = this.formBuilder.group({
-      email: new FormControl(
-        '',
-        [Validators.required, Validators.email]
-      ),
-      password: new FormControl(
-        '',
-        [Validators.required]
-      )
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
     this.formLoaded = true;
   }

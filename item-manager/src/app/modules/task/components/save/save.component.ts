@@ -46,18 +46,8 @@ export class SaveComponent extends BaseForm implements OnInit {
 
   private initializeForm() {
     this.theForm = this.formBuilder.group({
-      name: new FormControl(
-          this.task.name,
-          [
-              Validators.required
-          ]
-      ),
-      description: new FormControl(
-          this.task.description,
-          [
-            Validators.required
-          ]
-      )
+      name: [this.task.name, Validators.required],
+      description: [this.task.description, Validators.required]
     });
     if (this.task !== null) {
       this.theForm.addControl('completed', new FormControl(this.task.completed));
