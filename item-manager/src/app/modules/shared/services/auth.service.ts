@@ -12,17 +12,12 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class AngularFireService {
-  public signedIn: Observable<any>;
 
   constructor(private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore, 
     private messageService: MessageService
     ) 
-  {
-    this.signedIn = new Observable((subscriber) => {
-      this.fireAuth.onAuthStateChanged(subscriber);
-    });
-  }
+  { }
 
   public signUp(email: string, password: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -79,7 +74,7 @@ export class AngularFireService {
 
   public isUserLoggedIn(): Promise<boolean> {
     return new Promise((resolve) => {
-      this.signedIn.subscribe(
+      this.fireAuth.authState.subscribe(
         response => {
           if (response !== null) {
             resolve(true);
@@ -93,7 +88,7 @@ export class AngularFireService {
 
   public getUserId(): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.signedIn.subscribe(
+      this.fireAuth.authState.subscribe(
         response => {
           if (response !== null) {
             resolve(response.uid);
