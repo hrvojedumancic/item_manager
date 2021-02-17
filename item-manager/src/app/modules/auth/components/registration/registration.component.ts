@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
-import { RegistrationForm } from '../../services/registration-form.service';
+import firebase from 'firebase/app';
+import { MessageService } from 'src/app/modules/shared/services/message.service';
+import { BaseForm } from 'src/app/modules/shared/services/base-form/base-form.service';
+import { MessageOption } from 'src/app/modules/shared/models/messages.model';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent extends RegistrationForm implements OnInit {
+export class RegistrationComponent extends BaseForm implements OnInit {
 
   constructor(private afService: AngularFireService,
     private router: Router,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private messageService: MessageService) {
     super(afService);
   }
 
@@ -29,26 +33,27 @@ export class RegistrationComponent extends RegistrationForm implements OnInit {
     this.formLoaded = true;
   }
 
-  public onSubmit(): Promise<boolean> {
-    return new Promise((resolve) => {
-      super.onSubmit().then(
-        (response: boolean) => {
-          if (response) {
-            this.router.navigate(['/']).then();
-          }
-          return resolve(response);
-        });
-    }
-    )
+  public onSubmit() {
+    const formData = this.theForm.value;
+    this.angularFireService.signUp(formData.email, formData.password).then(
+      (response: firebase.auth.UserCredential) => {
+        this.router.navigate(['/']).then();
+      },
+      error => {
+        this.messageService.displayMessage(error.message, MessageOption.ERROR);
+      }
+    );
   }
 
-  public onGoogleSubmit(): Promise<boolean> {
-    return super.onGoogleSubmit().then(
-      (response: boolean) => {
+  public onGoogleSubmit() {
+    this.angularFireService.googleSignIn().then(
+      (response: firebase.auth.UserCredential) => {
         if (response) {
           this.router.navigate(['/']).then();
         }
-        return Promise.resolve(response);
+      },
+      error => {
+        this.messageService.displayMessage(error.message, MessageOption.ERROR);
       }
     );
   }

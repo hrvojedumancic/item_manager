@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
-import { LoginForm } from '../../services/login-form.service';
+import firebase from 'firebase/app';
+import { MessageService } from 'src/app/modules/shared/services/message.service';
+import { MessageOption } from 'src/app/modules/shared/models/messages.model';
+import { BaseForm } from 'src/app/modules/shared/services/base-form/base-form.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends LoginForm implements OnInit {
+export class LoginComponent extends BaseForm implements OnInit {
 
   constructor(private afService: AngularFireService,
     private router: Router,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private messageService: MessageService) {
     super(afService);
   }
   
@@ -30,26 +33,29 @@ export class LoginComponent extends LoginForm implements OnInit {
     this.formLoaded = true;
   }
 
-  public onGoogleSubmit(): Promise<boolean> {
-    return new Promise((resolve) => {
-      super.onGoogleSubmit().then(
-        (response: boolean) => {
-          if (response) {
+  public onGoogleSubmit() {
+    this.angularFireService.googleSignIn().then(
+      (response: firebase.auth.UserCredential) => {
+        if (response) {
+          if (response !== null) {
             this.router.navigate(['/']).then();
           }
-          return resolve(response);
         }
-      );
-    });
+      },
+      error => {
+        this.messageService.displayMessage(error.message, MessageOption.ERROR);
+      }
+    );
   }
 
-  public onSubmit(): Promise<boolean> {
-    return super.onSubmit().then(
-      (response: boolean) => {
-        if (response) {
-          this.router.navigate(['/']).then();
-        }
-        return Promise.resolve(response);
+  public onSubmit() {
+    const formData = this.theForm.value;
+    this.angularFireService.signIn(formData.email, formData.password).then(
+      (response: firebase.auth.UserCredential) => {
+        this.router.navigate(['/']).then();
+      },
+      error => {
+        this.messageService.displayMessage(error.message, MessageOption.ERROR);
       }
     );
   }
