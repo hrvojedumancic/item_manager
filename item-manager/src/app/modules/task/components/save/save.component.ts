@@ -30,7 +30,7 @@ export class SaveComponent extends BaseForm implements OnInit, OnDestroy {
     {
       super(afService);
       this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
-      this.task = this.taskService.getEmptyTaskObject();
+      this.task = this.taskService.getEmptyTask();
     }
 
   ngOnInit(): void {
@@ -39,9 +39,9 @@ export class SaveComponent extends BaseForm implements OnInit, OnDestroy {
         this.userId = uid;
         if (this.taskId === null) {
           this.initializeForm();
-        } else {
-          this.getTaskObject();
+          return;
         }
+        this.getTask();
       }
     )
   }
@@ -63,7 +63,7 @@ export class SaveComponent extends BaseForm implements OnInit, OnDestroy {
     this.formLoaded = true;
   }
 
-  public getTaskObject() {
+  public getTask() {
     this.taskSubscription = this.taskService.
       getTaskDocument(this.userId, this.taskId).valueChanges().subscribe(
         (response: TaskModel) => {
@@ -79,37 +79,33 @@ export class SaveComponent extends BaseForm implements OnInit, OnDestroy {
 
   public onSubmit() {
     if (this.taskId === null) {
-      this.createTaskObject();
-    } else {
-      this.updateTaskObject();
+      this.createTask();
+      return;
+    }
+    this.updateTask();
+  }
+
+  private updateTask() {
+    try {
+      const formData = this.theForm.value;
+      this.taskService.getTaskDocument(this.userId, this.taskId).update(formData);
+      this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
+        this.router.navigate(['/']);
+    } catch(error) {
+      this.messageService.displayMessage('Failed updating task', MessageOption.OK);
     }
   }
 
-  private updateTaskObject() {
-    const formData = this.theForm.value;
-    this.taskService.getTaskDocument(this.userId, this.taskId).update(formData).then(
-      (response) => {
-        this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
-        this.router.navigate(['/']);
-      },
-      (error) => {
-        this.messageService.displayMessage('Failed updating task', MessageOption.OK);
-      }
-    );
-  }
-
-  private createTaskObject() {
-    const formData = this.theForm.value;
-    formData.created_at = (new Date().toISOString());
-    formData.completed = false;
-    this.taskService.getTaskPath(this.userId).add(formData).then(
-      (response) => {
-        this.messageService.displayMessage('Task created', MessageOption.SUCCESS);
-        this.router.navigate(['/']);
-      },
-      (error) => {
-        this.messageService.displayMessage('Failed creating task', MessageOption.OK);
-      }
-    )
+  private createTask() {
+    try {
+      const formData = this.theForm.value;
+      formData.created_at = (new Date().toISOString());
+      formData.completed = false;
+      this.taskService.getTaskPath(this.userId).add(formData);
+      this.messageService.displayMessage('Task created', MessageOption.SUCCESS);
+      this.router.navigate(['/']);
+    } catch(error) {
+      this.messageService.displayMessage('Failed creating task', MessageOption.OK);
+    }
   }
 }

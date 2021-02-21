@@ -41,7 +41,7 @@ export class ListComponent implements AfterViewInit, OnDestroy {
     this.afService.getUserId().then(
       (uid: string) => {
         this.userId = uid;
-        this.getUserTaskCollection();
+        this.getTaskCollection();
       }
     )
   }
@@ -50,7 +50,7 @@ export class ListComponent implements AfterViewInit, OnDestroy {
     this.taskSubscription.unsubscribe();
   }
 
-  public getUserTaskCollection() {
+  public getTaskCollection() {
     this.taskSubscription = this.taskService.getTaskPath(this.userId).snapshotChanges().subscribe(
       (response: DocumentData[]) => {
         this.tasks = [];
@@ -67,29 +67,25 @@ export class ListComponent implements AfterViewInit, OnDestroy {
   }
 
   public deleteTask(taskId: string) {
-    this.taskService.getTaskDocument(this.userId, taskId).delete().then(
-      (response) => {
-        this.messageService.displayMessage('Task deleted', MessageOption.OK);
-      },
-      (error) => {
-        this.messageService.displayMessage('Unable to delete task', MessageOption.ERROR);
-      }
-    );
+    try {
+      this.taskService.getTaskDocument(this.userId, taskId).delete();
+      this.messageService.displayMessage('Task deleted', MessageOption.OK);
+    } catch(error) {
+      this.messageService.displayMessage('Unable to delete task', MessageOption.ERROR);
+    }
   }
 
   public updateTaskStatus(task: TaskModel, taskCompleted: boolean) {
     const formData = {
       completed: taskCompleted
     };
-    this.taskService.getTaskDocument(this.userId, task.id).update(formData).then(
-      (response) => {
-        this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
-        this.bindData();
-      },
-      (error) => {
-        this.messageService.displayMessage('Unable to update task', MessageOption.ERROR);
-      }
-    )
+    try {
+      this.taskService.getTaskDocument(this.userId, task.id).update(formData);
+      this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
+      this.bindData();
+    } catch(error) {
+      this.messageService.displayMessage('Unable to update task', MessageOption.ERROR);
+    }
   }
 
   public applyFilter(filterValue: string) {

@@ -37,7 +37,7 @@ export class RegistrationComponent extends BaseForm implements OnInit {
     const formData = this.theForm.value;
     try {
       await this.angularFireService.signUp(formData.email, formData.password);
-      this.router.navigate(['/']).then();  
+      this.router.navigate(['/']);  
     } catch(error) {
       this.messageService.displayMessage(error.message, MessageOption.ERROR);
     }
@@ -46,7 +46,7 @@ export class RegistrationComponent extends BaseForm implements OnInit {
   public async onGoogleSubmit() {
     try {
       await this.angularFireService.googleSignIn();
-      this.router.navigate(['/']).then();  
+      this.router.navigate(['/']);  
     } catch(error) {
       this.messageService.displayMessage(error.message, MessageOption.ERROR);
     }

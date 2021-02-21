@@ -29,7 +29,7 @@ export class ReadComponent implements OnInit, OnDestroy {
     this.afService.getUserId().then(
       (response: string) => {
         this.userId = response;
-        this.getUserObject();
+        this.getTask();
       }
     )
   }
@@ -38,7 +38,7 @@ export class ReadComponent implements OnInit, OnDestroy {
     this.taskSubscription.unsubscribe();
   }
 
-  public getUserObject() {
+  public getTask() {
     this.taskSubscription = this.taskService.
       getTaskDocument(this.userId, this.taskId).valueChanges().subscribe(
         (response: TaskModel) => {

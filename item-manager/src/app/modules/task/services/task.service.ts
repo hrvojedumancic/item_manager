@@ -10,7 +10,7 @@ export class TaskService {
 
     constructor(private firestore: AngularFirestore) {}
 
-    public getEmptyTaskObject(): TaskModel {
+    public getEmptyTask(): TaskModel {
         const task: TaskModel = {
             created_at: null,
             description: null,
