@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AngularFireService } from 'src/app/modules/shared/services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { TaskModel } from '../../task.model';
@@ -10,9 +11,10 @@ import { TaskModel } from '../../task.model';
   templateUrl: './read.component.html',
   styleUrls: ['./read.component.scss']
 })
-export class ReadComponent implements OnInit {
+export class ReadComponent implements OnInit, OnDestroy {
   private userId: string = null;
   private readonly taskId: string = null;
+  private taskSubscription: Subscription;
   public task: TaskModel = null;
 
   constructor(private afService: AngularFireService,
@@ -32,14 +34,19 @@ export class ReadComponent implements OnInit {
     )
   }
 
+  ngOnDestroy() {
+    this.taskSubscription.unsubscribe();
+  }
+
   public getUserObject() {
-    this.taskService.getTaskObject(this.userId, this.taskId).then(
-      (response: TaskModel) => {
-        this.task = response;
-      },
-      (error: any) => {
-        this.router.navigate(['/']);
-      }
+    this.taskSubscription = this.taskService.
+      getTaskDocument(this.userId, this.taskId).valueChanges().subscribe(
+        (response: TaskModel) => {
+          this.task = response;
+        },
+        (error) => {
+          this.router.navigate(['/']);
+        }
     )
   }
 

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseForm } from 'src/app/modules/shared/services/base-form/base-form.service';
 import { MessageOption } from 'src/app/modules/shared/models/messages.model';
@@ -7,15 +7,17 @@ import { AngularFireService } from 'src/app/modules/shared/services/auth.service
 import { MessageService } from 'src/app/modules/shared/services/message.service';
 import { TaskService } from '../../services/task.service';
 import { TaskModel } from '../../task.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-save',
   templateUrl: './save.component.html',
   styleUrls: ['./save.component.scss']
 })
-export class SaveComponent extends BaseForm implements OnInit {
+export class SaveComponent extends BaseForm implements OnInit, OnDestroy {
   private userId: string;
   public task: TaskModel;
+  private taskSubscription: Subscription = null;
   private readonly taskId: string = null;
 
   constructor(
@@ -44,6 +46,12 @@ export class SaveComponent extends BaseForm implements OnInit {
     )
   }
 
+  ngOnDestroy() {
+    if (this.taskSubscription !== null) {
+      this.taskSubscription.unsubscribe();
+    }
+  }
+
   private initializeForm() {
     this.theForm = this.formBuilder.group({
       name: [this.task.name, Validators.required],
@@ -56,15 +64,16 @@ export class SaveComponent extends BaseForm implements OnInit {
   }
 
   public getTaskObject() {
-    this.taskService.getTaskObject(this.userId, this.taskId).then(
-      (response: TaskModel) => {
-        this.task = response;
-        this.task.id = this.taskId;
-        this.initializeForm();
-      },
-      (error: any) => {
-        this.messageService.displayMessage('Error while getting task object', MessageOption.OK);
-      }
+    this.taskSubscription = this.taskService.
+      getTaskDocument(this.userId, this.taskId).valueChanges().subscribe(
+        (response: TaskModel) => {
+          this.task = response;
+          this.task.id = this.taskId;
+          this.initializeForm();
+        },
+        (error) => {
+          this.messageService.displayMessage('Error while getting task object', MessageOption.OK);
+        }
     )
   }
 
@@ -78,12 +87,12 @@ export class SaveComponent extends BaseForm implements OnInit {
 
   private updateTaskObject() {
     const formData = this.theForm.value;
-    this.taskService.updateTask(this.userId, this.taskId, formData).then(
-      (response: boolean) => {
+    this.taskService.getTaskDocument(this.userId, this.taskId).update(formData).then(
+      (response) => {
         this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
         this.router.navigate(['/']);
       },
-      (error: any) => {
+      (error) => {
         this.messageService.displayMessage('Failed updating task', MessageOption.OK);
       }
     );
@@ -94,11 +103,11 @@ export class SaveComponent extends BaseForm implements OnInit {
     formData.created_at = (new Date().toISOString());
     formData.completed = false;
     this.taskService.getTaskPath(this.userId).add(formData).then(
-      (response: any) => {
+      (response) => {
         this.messageService.displayMessage('Task created', MessageOption.SUCCESS);
         this.router.navigate(['/']);
       },
-      (error: any) => {
+      (error) => {
         this.messageService.displayMessage('Failed creating task', MessageOption.OK);
       }
     )

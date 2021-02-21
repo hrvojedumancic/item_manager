@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { AngularFireService } from '../../../shared/services/auth.service';
 import { TaskModel } from '../../task.model';
 import { TaskService } from '../../services/task.service';
@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { DocumentData } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { MessageService } from 'src/app/modules/shared/services/message.service';
+import { MessageOption } from 'src/app/modules/shared/models/messages.model';
 
 @Component({
   selector: 'app-list',
@@ -32,7 +34,8 @@ export class ListComponent implements AfterViewInit, OnDestroy {
   ];
 
   constructor(private afService: AngularFireService,
-    private taskService: TaskService) { }
+    private taskService: TaskService,
+    private messageService: MessageService) { }
 
   ngAfterViewInit(): void {
     this.afService.getUserId().then(
@@ -64,12 +67,12 @@ export class ListComponent implements AfterViewInit, OnDestroy {
   }
 
   public deleteTask(taskId: string) {
-    this.taskService.deleteTask(this.userId, taskId).then(
-      (response: boolean) => {
-        if (response) {
-          this.tasks = this.tasks.filter(x => x.id !== taskId);
-          this.bindData();
-        }
+    this.taskService.getTaskDocument(this.userId, taskId).delete().then(
+      (response) => {
+        this.messageService.displayMessage('Task deleted', MessageOption.OK);
+      },
+      (error) => {
+        this.messageService.displayMessage('Unable to delete task', MessageOption.ERROR);
       }
     );
   }
@@ -78,11 +81,13 @@ export class ListComponent implements AfterViewInit, OnDestroy {
     const formData = {
       completed: taskCompleted
     };
-    this.taskService.updateTask(this.userId, task.id, formData).then(
-      (response: boolean) => {
-        const taskIndex = this.tasks.indexOf(task);
-        this.tasks[taskIndex].completed = taskCompleted;
+    this.taskService.getTaskDocument(this.userId, task.id).update(formData).then(
+      (response) => {
+        this.messageService.displayMessage('Task updated', MessageOption.SUCCESS);
         this.bindData();
+      },
+      (error) => {
+        this.messageService.displayMessage('Unable to update task', MessageOption.ERROR);
       }
     )
   }
