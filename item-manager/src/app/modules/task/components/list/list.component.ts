@@ -62,6 +62,9 @@ export class ListComponent implements AfterViewInit, OnDestroy {
         });
         this.bindData();
         this.formLoaded = true;
+      },
+      (error) => {
+        this.messageService.displayMessage('Error while getting tasks', MessageOption.ERROR);
       }
     )
   }
