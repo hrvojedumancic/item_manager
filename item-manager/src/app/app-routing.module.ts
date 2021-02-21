@@ -4,7 +4,7 @@ import { NavigationComponent } from './modules/shared/components/navigation/navi
 import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 
-const redirectLoggedInToMain = () => redirectLoggedInTo(['']);
+const redirectLoggedInToMain = () => redirectLoggedInTo(['/']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [

@@ -53,7 +53,7 @@ export class RegistrationComponent extends BaseForm implements OnInit {
   }
 
   public redirectToLogin() {
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
   }
 
 }
