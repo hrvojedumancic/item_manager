@@ -33,31 +33,23 @@ export class LoginComponent extends BaseForm implements OnInit {
     this.formLoaded = true;
   }
 
-  public onGoogleSubmit() {
-    this.angularFireService.googleSignIn().then(
-      (response: firebase.auth.UserCredential) => {
-        if (response) {
-          if (response !== null) {
-            this.router.navigate(['/']).then();
-          }
-        }
-      },
-      error => {
-        this.messageService.displayMessage(error.message, MessageOption.ERROR);
-      }
-    );
+  public async onGoogleSubmit() {
+    try {
+      const response = await this.angularFireService.googleSignIn();
+      this.router.navigate(['/']).then();
+    } catch(error) {
+      this.messageService.displayMessage(error.message, MessageOption.ERROR);
+    }
   }
 
-  public onSubmit() {
+  public async onSubmit() {
     const formData = this.theForm.value;
-    this.angularFireService.signIn(formData.email, formData.password).then(
-      (response: firebase.auth.UserCredential) => {
-        this.router.navigate(['/']).then();
-      },
-      error => {
-        this.messageService.displayMessage(error.message, MessageOption.ERROR);
-      }
-    );
+    try {
+      const response = await this.angularFireService.signIn(formData.email, formData.password);
+      this.router.navigate(['/']).then();
+    } catch(error) {
+      this.messageService.displayMessage(error.message, MessageOption.ERROR);
+    }
   }
 
   public redirectToRegistration() {

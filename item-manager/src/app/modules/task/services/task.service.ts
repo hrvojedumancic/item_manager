@@ -1,5 +1,6 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Collections } from '../../shared/models/collections.model';
 import { MessageOption } from '../../shared/models/messages.model';
 import { MessageService } from '../../shared/services/message.service';
